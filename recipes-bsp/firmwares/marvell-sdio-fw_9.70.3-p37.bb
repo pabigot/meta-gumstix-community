@@ -5,8 +5,9 @@ LIC_FILES_CHKSUM = "file://Marvell-Licence.txt;md5=4725db20ee6d3466bfc15f27076df
 SRC_URI = "file://${PV}.tar.gz \
            file://Marvell-Licence.txt"
 
-PR = "r0"
+PR = "r1"
 
+inherit allarch
 
 do_unpack_append() {
 	bb.build.exec_func('do_cp_lic', d)
@@ -24,5 +25,3 @@ do_install() {
 S = "${WORKDIR}/${PV}/FwImage"
 
 FILES_${PN} += "${base_libdir}/firmware"
-
-PACKAGE_ARCH = "all"
