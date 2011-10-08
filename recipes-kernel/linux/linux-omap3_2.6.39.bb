@@ -14,7 +14,7 @@ SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-2.6.39;proto
            file://${BOOT_SPLASH} \
            "
 
-CONFIGUREOPT_DEPTRACK = "enable-dependency-tracking"
+PARALLEL_MAKEINST = ""
 
 do_configure_prepend() {
 
