@@ -1,9 +1,7 @@
-FILESEXTRAPATHS := "${THISDIR}/${PN}"
+FILESEXTRAPATHS := "${THISDIR}/2011.09"
 
 COMPATIBLE_MACHINE_overo = "overo"
 
-# temp remove for SPL?
-UBOOT_IMAGE = "u-boot-${MACHINE}-${PV}-${PR}.bin"
-UBOOT_BINARY = "u-boot.bin"
-UBOOT_SYMLINK = "u-boot-${MACHINE}.bin"
+PRINC = "1"
 
+SRC_URI += "file://0001-u-boot-add-SPL-support.patch"

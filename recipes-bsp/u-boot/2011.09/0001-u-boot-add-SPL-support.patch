@@ -1,0 +1,192 @@
+From 62a3457efa6d2fb277f8d8941ab2ee3312b108eb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Mon, 12 Dec 2011 11:46:34 +0100
+Subject: [PATCH] u-boot: add SPL support
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ board/overo/config.mk         |   28 --------------------
+ board/overo/overo.c           |   41 +++++++++++++++++++++++++++++-
+ include/configs/omap3_overo.h |   56 ++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 95 insertions(+), 30 deletions(-)
+ delete mode 100644 board/overo/config.mk
+
+diff --git a/board/overo/config.mk b/board/overo/config.mk
+deleted file mode 100644
+index e7c471c..0000000
+--- a/board/overo/config.mk
++++ /dev/null
+@@ -1,28 +0,0 @@
+-#
+-# Overo uses OMAP3 (ARM-CortexA8) cpu
+-#
+-# See file CREDITS for list of people who contributed to this
+-# project.
+-#
+-# This program is free software; you can redistribute it and/or
+-# modify it under the terms of the GNU General Public License as
+-# published by the Free Software Foundation; either version 2 of
+-# the License, or (at your option) any later version.
+-#
+-# This program is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU General Public License for more details.
+-#
+-# You should have received a copy of the GNU General Public License
+-# along with this program; if not, write to the Free Software
+-# Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+-# MA 02111-1307 USA
+-#
+-# Physical Address:
+-# 8000'0000 (bank0)
+-# A000/0000 (bank1)
+-# Linux-Kernel is expected to be at 8000'8000, entry 8000'8000
+-# (mem base + reserved)
+-
+-CONFIG_SYS_TEXT_BASE = 0x80008000
+diff --git a/board/overo/overo.c b/board/overo/overo.c
+index 3c60b06..be1fa9e 100644
+--- a/board/overo/overo.c
++++ b/board/overo/overo.c
+@@ -31,6 +31,7 @@
+ #include <common.h>
+ #include <netdev.h>
+ #include <twl4030.h>
++#include <linux/mtd/nand.h>
+ #include <asm/io.h>
+ #include <asm/arch/mmc_host_def.h>
+ #include <asm/arch/mux.h>
+@@ -126,6 +127,44 @@ int get_board_revision(void)
+ 	return revision;
+ }
+ 
++#ifdef CONFIG_SPL_BUILD
++/*
++ * Routine: get_board_mem_timings
++ * Description: If we use SPL then there is no x-loader nor config header
++ * so we have to setup the DDR timings ourself on both banks.
++ */
++void get_board_mem_timings(u32 *mcfg, u32 *ctrla, u32 *ctrlb, u32 *rfr_ctrl,
++		u32 *mr)
++{
++	*mr = MICRON_V_MR_165;
++	switch (get_board_revision()) {
++	case 0: /* Micron 1286MB/256MB, 1/2 banks of 128MB */
++		*mcfg = MICRON_V_MCFG_165(256 << 20);
++		*ctrla = MICRON_V_ACTIMA_165;
++		*ctrlb = MICRON_V_ACTIMB_165;
++		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
++		break;
++	case 1: /* Micron 256MB/512MB, 1/2 banks of 256MB */
++		*mcfg = MICRON_V_MCFG_165(256 << 20);
++		*ctrla = MICRON_V_ACTIMA_165;
++		*ctrlb = MICRON_V_ACTIMB_165;
++		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
++		break;
++	case 2: /* Hynix 256MB/512MB, 1/2 banks of 256MB */
++		*mcfg = HYNIX_V_MCFG_200(256 << 20);
++		*ctrla = HYNIX_V_ACTIMA_200;
++		*ctrlb = HYNIX_V_ACTIMB_200;
++		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_200MHz;
++		break;
++	default:
++		*mcfg = MICRON_V_MCFG_165(256 << 20);
++		*ctrla = MICRON_V_ACTIMA_165;
++		*ctrlb = MICRON_V_ACTIMB_165;
++		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
++	}
++}
++#endif
++
+ /*
+  * Routine: get_sdio2_config
+  * Description: Return information about the wifi module connection
+@@ -337,7 +376,7 @@ int board_eth_init(bd_t *bis)
+ 	return rc;
+ }
+ 
+-#ifdef CONFIG_GENERIC_MMC
++#if defined(CONFIG_GENERIC_MMC) && !defined(CONFIG_SPL_BUILD)
+ int board_mmc_init(bd_t *bis)
+ {
+ 	omap_mmc_init(0);
+diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
+index afdefd9..1dccb4e 100644
+--- a/include/configs/omap3_overo.h
++++ b/include/configs/omap3_overo.h
+@@ -254,7 +254,6 @@
+  */
+ #define CONFIG_NR_DRAM_BANKS	2	/* CS1 may or may not be populated */
+ #define PHYS_SDRAM_1		OMAP34XX_SDRC_CS0
+-#define PHYS_SDRAM_1_SIZE	(32 << 20)	/* at least 32 MiB */
+ #define PHYS_SDRAM_2		OMAP34XX_SDRC_CS1
+ 
+ /* SDRAM Bank Allocation method */
+@@ -307,4 +306,59 @@
+ 					 CONFIG_SYS_INIT_RAM_SIZE - \
+ 					 GENERATED_GBL_DATA_SIZE)
+ 
++
++/* Defines for SPL */
++#define CONFIG_SPL
++#define CONFIG_SPL_NAND_SIMPLE
++#define CONFIG_SPL_TEXT_BASE		0x40200800
++#define CONFIG_SPL_MAX_SIZE		(45 * 1024)
++#define CONFIG_SPL_STACK		LOW_LEVEL_SRAM_STACK
++
++#define CONFIG_SPL_BSS_START_ADDR	0x80000000
++#define CONFIG_SPL_BSS_MAX_SIZE		0x80000		/* 512 KB */
++
++#define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR	0x300 /* address 0x60000 */
++#define CONFIG_SYS_U_BOOT_MAX_SIZE_SECTORS	0x200 /* 256 KB */
++#define CONFIG_SYS_MMC_SD_FAT_BOOT_PARTITION	1
++#define CONFIG_SPL_FAT_LOAD_PAYLOAD_NAME	"u-boot.img"
++
++#define CONFIG_SPL_LIBCOMMON_SUPPORT
++#define CONFIG_SPL_LIBDISK_SUPPORT
++#define CONFIG_SPL_I2C_SUPPORT
++#define CONFIG_SPL_LIBGENERIC_SUPPORT
++#define CONFIG_SPL_MMC_SUPPORT
++#define CONFIG_SPL_FAT_SUPPORT
++#define CONFIG_SPL_SERIAL_SUPPORT
++#define CONFIG_SPL_NAND_SUPPORT
++#define CONFIG_SPL_POWER_SUPPORT
++#define CONFIG_SPL_LDSCRIPT		"$(CPUDIR)/omap-common/u-boot-spl.lds"
++
++/* NAND boot config */
++#define CONFIG_SYS_NAND_5_ADDR_CYCLE
++#define CONFIG_SYS_NAND_PAGE_COUNT	64
++#define CONFIG_SYS_NAND_PAGE_SIZE	2048
++#define CONFIG_SYS_NAND_OOBSIZE		64
++#define CONFIG_SYS_NAND_BLOCK_SIZE	(128*1024)
++#define CONFIG_SYS_NAND_BAD_BLOCK_POS	0
++#define CONFIG_SYS_NAND_ECCPOS		{2, 3, 4, 5, 6, 7, 8, 9,\
++						10, 11, 12, 13}
++#define CONFIG_SYS_NAND_ECCSIZE		512
++#define CONFIG_SYS_NAND_ECCBYTES	3
++#define CONFIG_SYS_NAND_ECCSTEPS	(CONFIG_SYS_NAND_PAGE_SIZE / \
++						CONFIG_SYS_NAND_ECCSIZE)
++#define CONFIG_SYS_NAND_ECCTOTAL	(CONFIG_SYS_NAND_ECCBYTES * \
++						CONFIG_SYS_NAND_ECCSTEPS)
++#define CONFIG_SYS_NAND_U_BOOT_START	CONFIG_SYS_TEXT_BASE
++#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x80000
++
++/*
++ * 1MB into the SDRAM to allow for SPL's bss at the beginning of SDRAM
++ * 64 bytes before this address should be set aside for u-boot.img's
++ * header. That is 0x800FFFC0--0x80100000 should not be used for any
++ * other needs.
++ */
++#define CONFIG_SYS_TEXT_BASE		0x80100000
++#define CONFIG_SYS_SPL_MALLOC_START	0x80208000
++#define CONFIG_SYS_SPL_MALLOC_SIZE	0x100000
++
+ #endif				/* __CONFIG_H */
+-- 
+1.7.6.4
+
