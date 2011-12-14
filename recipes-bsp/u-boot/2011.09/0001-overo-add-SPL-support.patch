@@ -1,19 +1,62 @@
-From bdf1374cfeeef5d6b3936ed4f2e01c607c040688 Mon Sep 17 00:00:00 2001
+From 8a62cedcd600970d58876cb95341724559e24f35 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
-Date: Mon, 12 Dec 2011 11:46:34 +0100
-Subject: [PATCH] u-boot: add SPL support
+Date: Wed, 14 Dec 2011 12:00:18 +0100
+Subject: [PATCH] overo: add SPL support
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+* implemenatation based on ti beagleboard/omap3evm
+* timing data taken from x-loader
+* run-tested with overo release 0 and 1 / boot from NAND and SDcard
+
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
- board/overo/config.mk         |   28 --------------------
- board/overo/overo.c           |   42 ++++++++++++++++++++++++++++++-
- include/configs/omap3_overo.h |   56 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 96 insertions(+), 30 deletions(-)
+ arch/arm/include/asm/arch-omap3/mem.h |   27 ++++++++++++++++
+ board/overo/config.mk                 |   28 ----------------
+ board/overo/overo.c                   |   41 +++++++++++++++++++++++-
+ include/configs/omap3_overo.h         |   56 ++++++++++++++++++++++++++++++++-
+ 4 files changed, 122 insertions(+), 30 deletions(-)
  delete mode 100644 board/overo/config.mk
 
+diff --git a/arch/arm/include/asm/arch-omap3/mem.h b/arch/arm/include/asm/arch-omap3/mem.h
+index 5fd02d4..18998d8 100644
+--- a/arch/arm/include/asm/arch-omap3/mem.h
++++ b/arch/arm/include/asm/arch-omap3/mem.h
+@@ -123,6 +123,33 @@ enum {
+ 		V_MCFG_BANKALLOCATION_RBC |			\
+ 		V_MCFG_B32NOT16_32 | V_MCFG_DEEPPD_EN | V_MCFG_RAMTYPE_DDR
+ 
++
++/* Hynix part of Overo (165MHz optimized) 6.06ns */
++#define HYNIX_TDAL_165   6
++#define HYNIX_TDPL_165   3
++#define HYNIX_TRRD_165   2
++#define HYNIX_TRCD_165   3
++#define HYNIX_TRP_165    3
++#define HYNIX_TRAS_165   7
++#define HYNIX_TRC_165   10
++#define HYNIX_TRFC_165  21
++#define HYNIX_V_ACTIMA_165	\
++		ACTIM_CTRLA(HYNIX_TRFC_165, HYNIX_TRC_165,	\
++				HYNIX_TRAS_165, HYNIX_TRP_165,	\
++				HYNIX_TRCD_165, HYNIX_TRRD_165,	\
++				HYNIX_TDPL_165, HYNIX_TDAL_165)
++
++#define HYNIX_TWTR_165   1
++#define HYNIX_TCKE_165   1
++#define HYNIX_TXP_165    2
++#define HYNIX_XSR_165    24
++#define HYNIX_V_ACTIMB_165	\
++		ACTIM_CTRLB(HYNIX_TWTR_165, HYNIX_TCKE_165,	\
++				HYNIX_TXP_165, HYNIX_XSR_165)
++
++#define HYNIX_RASWIDTH_165	0x2
++#define HYNIX_V_MCFG_165(size)	MCFG((size), HYNIX_RASWIDTH_165)
++
+ /* Hynix part of AM/DM37xEVM (200MHz optimized) */
+ #define HYNIX_TDAL_200		6
+ #define HYNIX_TDPL_200		3
 diff --git a/board/overo/config.mk b/board/overo/config.mk
 deleted file mode 100644
 index e7c471c..0000000
@@ -49,7 +92,7 @@ index e7c471c..0000000
 -
 -CONFIG_SYS_TEXT_BASE = 0x80008000
 diff --git a/board/overo/overo.c b/board/overo/overo.c
-index 3c60b06..c2dbe52 100644
+index 3c60b06..dbe43ab 100644
 --- a/board/overo/overo.c
 +++ b/board/overo/overo.c
 @@ -31,6 +31,7 @@
@@ -60,7 +103,7 @@ index 3c60b06..c2dbe52 100644
  #include <asm/io.h>
  #include <asm/arch/mmc_host_def.h>
  #include <asm/arch/mux.h>
-@@ -126,6 +127,45 @@ int get_board_revision(void)
+@@ -126,6 +127,44 @@ int get_board_revision(void)
  	return revision;
  }
  
@@ -88,11 +131,10 @@ index 3c60b06..c2dbe52 100644
 +		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
 +		break;
 +	case 2: /* Hynix 256MB/512MB, 1/2 banks of 256MB */
-+		/* Untested: TODO */
-+		*mcfg = HYNIX_V_MCFG_200(256 << 20);
-+		*ctrla = HYNIX_V_ACTIMA_200;
-+		*ctrlb = HYNIX_V_ACTIMB_200;
-+		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_200MHz;
++		*mcfg = HYNIX_V_MCFG_165(256 << 20);
++		*ctrla = HYNIX_V_ACTIMA_165;
++		*ctrlb = HYNIX_V_ACTIMB_165;
++		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
 +		break;
 +	default:
 +		*mcfg = MICRON_V_MCFG_165(128 << 20);
@@ -106,7 +148,7 @@ index 3c60b06..c2dbe52 100644
  /*
   * Routine: get_sdio2_config
   * Description: Return information about the wifi module connection
-@@ -337,7 +377,7 @@ int board_eth_init(bd_t *bis)
+@@ -337,7 +376,7 @@ int board_eth_init(bd_t *bis)
  	return rc;
  }
  
@@ -116,20 +158,60 @@ index 3c60b06..c2dbe52 100644
  {
  	omap_mmc_init(0);
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index afdefd9..ad4c2d1 100644
+index 79eb466..d9f54d1 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -254,7 +254,6 @@
+@@ -149,6 +149,25 @@
+ #define CONFIG_JFFS2_PART_SIZE		0xf980000	/* size of jffs2 */
+ 							/* partition */
+ 
++/* NAND boot config */
++#define CONFIG_SYS_NAND_5_ADDR_CYCLE
++#define CONFIG_SYS_NAND_PAGE_COUNT	64
++#define CONFIG_SYS_NAND_PAGE_SIZE	2048
++#define CONFIG_SYS_NAND_OOBSIZE		64
++#define CONFIG_SYS_NAND_BLOCK_SIZE	(128*1024)
++#define CONFIG_SYS_NAND_BAD_BLOCK_POS	0
++#define CONFIG_SYS_NAND_ECCPOS		{2, 3, 4, 5, 6, 7, 8, 9,\
++						10, 11, 12, 13}
++#define CONFIG_SYS_NAND_ECCSIZE		512
++#define CONFIG_SYS_NAND_ECCBYTES	3
++#define CONFIG_SYS_NAND_ECCSTEPS	(CONFIG_SYS_NAND_PAGE_SIZE / \
++						CONFIG_SYS_NAND_ECCSIZE)
++#define CONFIG_SYS_NAND_ECCTOTAL	(CONFIG_SYS_NAND_ECCBYTES * \
++						CONFIG_SYS_NAND_ECCSTEPS)
++#define CONFIG_SYS_NAND_U_BOOT_START	CONFIG_SYS_TEXT_BASE
++#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x80000
++
++
+ /* Environment information */
+ #define CONFIG_BOOTDELAY		5
+ 
+@@ -249,7 +268,6 @@
   */
  #define CONFIG_NR_DRAM_BANKS	2	/* CS1 may or may not be populated */
  #define PHYS_SDRAM_1		OMAP34XX_SDRC_CS0
 -#define PHYS_SDRAM_1_SIZE	(32 << 20)	/* at least 32 MiB */
  #define PHYS_SDRAM_2		OMAP34XX_SDRC_CS1
  
- /* SDRAM Bank Allocation method */
-@@ -307,4 +306,59 @@
- 					 CONFIG_SYS_INIT_RAM_SIZE - \
- 					 GENERATED_GBL_DATA_SIZE)
+ /*-----------------------------------------------------------------------
+@@ -292,6 +310,13 @@
+ 
+ #endif /* (CONFIG_CMD_NET) */
+ 
++/*
++ * 1MB into the SDRAM to allow for SPL's bss at the beginning of SDRAM
++ * 64 bytes before this address should be set aside for u-boot.img's
++ * header. That is 0x800FFFC0--0x80100000 should not be used for any
++ * other needs.
++ */
++#define CONFIG_SYS_TEXT_BASE		0x80100000
+ #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
+ #define CONFIG_SYS_INIT_RAM_ADDR	0x4020f800
+ #define CONFIG_SYS_INIT_RAM_SIZE	0x800
+@@ -301,4 +326,33 @@
+ 
+ #define CONFIG_SYS_CACHELINE_SIZE	64
  
 +
 +/* Defines for SPL */
@@ -157,36 +239,10 @@ index afdefd9..ad4c2d1 100644
 +#define CONFIG_SPL_NAND_SUPPORT
 +#define CONFIG_SPL_POWER_SUPPORT
 +#define CONFIG_SPL_LDSCRIPT		"$(CPUDIR)/omap-common/u-boot-spl.lds"
-+
-+/* NAND boot config */
-+#define CONFIG_SYS_NAND_5_ADDR_CYCLE
-+#define CONFIG_SYS_NAND_PAGE_COUNT	64
-+#define CONFIG_SYS_NAND_PAGE_SIZE	2048
-+#define CONFIG_SYS_NAND_OOBSIZE		64
-+#define CONFIG_SYS_NAND_BLOCK_SIZE	(128*1024)
-+#define CONFIG_SYS_NAND_BAD_BLOCK_POS	0
-+#define CONFIG_SYS_NAND_ECCPOS		{2, 3, 4, 5, 6, 7, 8, 9,\
-+						10, 11, 12, 13}
-+#define CONFIG_SYS_NAND_ECCSIZE		512
-+#define CONFIG_SYS_NAND_ECCBYTES	3
-+#define CONFIG_SYS_NAND_ECCSTEPS	(CONFIG_SYS_NAND_PAGE_SIZE / \
-+						CONFIG_SYS_NAND_ECCSIZE)
-+#define CONFIG_SYS_NAND_ECCTOTAL	(CONFIG_SYS_NAND_ECCBYTES * \
-+						CONFIG_SYS_NAND_ECCSTEPS)
-+#define CONFIG_SYS_NAND_U_BOOT_START	CONFIG_SYS_TEXT_BASE
-+#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x80000
-+
-+/*
-+ * 1MB into the SDRAM to allow for SPL's bss at the beginning of SDRAM
-+ * 64 bytes before this address should be set aside for u-boot.img's
-+ * header. That is 0x800FFFC0--0x80100000 should not be used for any
-+ * other needs.
-+ */
-+#define CONFIG_SYS_TEXT_BASE		0x80080000
 +#define CONFIG_SYS_SPL_MALLOC_START	0x80208000
 +#define CONFIG_SYS_SPL_MALLOC_SIZE	0x100000
 +
  #endif				/* __CONFIG_H */
 -- 
-1.7.4.4
+1.7.6.4
 
