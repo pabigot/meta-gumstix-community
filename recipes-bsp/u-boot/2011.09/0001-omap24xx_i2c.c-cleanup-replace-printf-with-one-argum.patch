@@ -1,0 +1,74 @@
+From ee6489a9bfb99f6e99a69be7311eac9ddd3c0950 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Sun, 18 Dec 2011 21:41:30 +0100
+Subject: [PATCH 1/4] omap24xx_i2c.c cleanup: replace printf with one argument
+ by puts
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ drivers/i2c/omap24xx_i2c.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/i2c/omap24xx_i2c.c b/drivers/i2c/omap24xx_i2c.c
+index 4ae237a..271ed60 100644
+--- a/drivers/i2c/omap24xx_i2c.c
++++ b/drivers/i2c/omap24xx_i2c.c
+@@ -73,7 +73,7 @@ void i2c_init(int speed, int slaveadd)
+ 		fssclh -= I2C_HIGHSPEED_PHASE_ONE_SCLH_TRIM;
+ 		if (((fsscll < 0) || (fssclh < 0)) ||
+ 		    ((fsscll > 255) || (fssclh > 255))) {
+-			printf("Error : I2C initializing first phase clock\n");
++			puts("Error : I2C initializing first phase clock\n");
+ 			return;
+ 		}
+ 
+@@ -84,7 +84,7 @@ void i2c_init(int speed, int slaveadd)
+ 		hssclh -= I2C_HIGHSPEED_PHASE_TWO_SCLH_TRIM;
+ 		if (((fsscll < 0) || (fssclh < 0)) ||
+ 		    ((fsscll > 255) || (fssclh > 255))) {
+-			printf("Error : I2C initializing second phase clock\n");
++			puts("Error : I2C initializing second phase clock\n");
+ 			return;
+ 		}
+ 
+@@ -99,7 +99,7 @@ void i2c_init(int speed, int slaveadd)
+ 		fssclh -= I2C_FASTSPEED_SCLH_TRIM;
+ 		if (((fsscll < 0) || (fssclh < 0)) ||
+ 		    ((fsscll > 255) || (fssclh > 255))) {
+-			printf("Error : I2C initializing clock\n");
++			puts("Error : I2C initializing clock\n");
+ 			return;
+ 		}
+ 
+@@ -118,7 +118,7 @@ void i2c_init(int speed, int slaveadd)
+ 	writew(I2C_CON_EN, &i2c_base->con);
+ 	while (!(readw(&i2c_base->syss) & I2C_SYSS_RDONE) && timeout--) {
+ 		if (timeout <= 0) {
+-			printf("ERROR: Timeout in soft-reset\n");
++			puts("ERROR: Timeout in soft-reset\n");
+ 			return;
+ 		}
+ 		udelay(1000);
+@@ -284,13 +284,13 @@ int i2c_read(uchar chip, uint addr, int alen, uchar *buffer, int len)
+ 	}
+ 
+ 	if (addr + len > 256) {
+-		printf("I2C read: address out of range\n");
++		puts("I2C read: address out of range\n");
+ 		return 1;
+ 	}
+ 
+ 	for (i = 0; i < len; i++) {
+ 		if (i2c_read_byte(chip, addr + i, &buffer[i])) {
+-			printf("I2C read: I/O error\n");
++			puts("I2C read: I/O error\n");
+ 			i2c_init(CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
+ 			return 1;
+ 		}
+-- 
+1.7.4.4
+

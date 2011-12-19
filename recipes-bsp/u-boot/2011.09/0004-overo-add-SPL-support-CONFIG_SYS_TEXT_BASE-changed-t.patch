@@ -1,7 +1,7 @@
-From 48b330e242ebb41c452cc7ee09fd29e999e1f71e Mon Sep 17 00:00:00 2001
+From 4db3dfa5c3e26bd585f01a0832ff849fa157a3de Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
-Date: Wed, 14 Dec 2011 12:00:18 +0100
-Subject: [PATCH] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
+Date: Sun, 18 Dec 2011 22:25:00 +0100
+Subject: [PATCH 4/4] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
  0x80100000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,13 +14,12 @@ Content-Transfer-Encoding: 8bit
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
  arch/arm/cpu/armv7/omap-common/spl.c  |    4 ++
- arch/arm/include/asm/arch-omap3/mem.h |   26 ++++++++++++++
- board/overo/config.mk                 |   28 ---------------
- board/overo/overo.c                   |   61 +++++++++++++++++++++++++++++++--
+ arch/arm/include/asm/arch-omap3/mem.h |   26 +++++++++++++++
+ board/overo/config.mk                 |   28 ----------------
+ board/overo/overo.c                   |   57 ++++++++++++++++++++++++++++++++-
  board/overo/overo.h                   |    5 +++
- drivers/i2c/omap24xx_i2c.c            |   12 +++---
- include/configs/omap3_overo.h         |   55 +++++++++++++++++++++++++++++-
- 7 files changed, 153 insertions(+), 38 deletions(-)
+ include/configs/omap3_overo.h         |   53 ++++++++++++++++++++++++++++++
+ 6 files changed, 144 insertions(+), 29 deletions(-)
  delete mode 100644 board/overo/config.mk
 
 diff --git a/arch/arm/cpu/armv7/omap-common/spl.c b/arch/arm/cpu/armv7/omap-common/spl.c
@@ -118,7 +117,7 @@ index e7c471c..0000000
 -
 -CONFIG_SYS_TEXT_BASE = 0x80008000
 diff --git a/board/overo/overo.c b/board/overo/overo.c
-index 3c60b06..f7e2c3e 100644
+index 4a20c7f..9b3b1cd 100644
 --- a/board/overo/overo.c
 +++ b/board/overo/overo.c
 @@ -31,6 +31,7 @@
@@ -139,26 +138,18 @@ index 3c60b06..f7e2c3e 100644
 +	/* board revisions <= R2410 connect 4030 irq_1 to gpio112             */
 +	/* these boards should return a revision number of 0                  */
 +	/* the code below forces a 4030 RTC irq to ensure that gpio112 is low */
-+	i2c_set_bus_num(TWL4030_I2C_BUS);
++	/*i2c_set_bus_num(TWL4030_I2C_BUS);
 +	data = 0x01;
 +	i2c_write(0x4B, 0x29, 1, &data, 1);
 +	data = 0x0c;
 +	i2c_write(0x4B, 0x2b, 1, &data, 1);
-+	i2c_read(0x4B, 0x2a, 1, &data, 1);
++	i2c_read(0x4B, 0x2a, 1, &data, 1);*/
 +#endif
 +
  	if (!gpio_request(112, "") &&
  	    !gpio_request(113, "") &&
  	    !gpio_request(115, "")) {
-@@ -119,13 +134,53 @@ int get_board_revision(void)
- 			   gpio_get_value(113) << 1 |
- 			   gpio_get_value(112);
- 	} else {
--		printf("Error: unable to acquire board revision GPIOs\n");
-+		puts("Error: unable to acquire board revision GPIOs\n");
- 		revision = -1;
- 	}
- 
+@@ -126,6 +141,46 @@ int get_board_revision(void)
  	return revision;
  }
  
@@ -205,15 +196,6 @@ index 3c60b06..f7e2c3e 100644
  /*
   * Routine: get_sdio2_config
   * Description: Return information about the wifi module connection
-@@ -151,7 +206,7 @@ int get_sdio2_config(void)
- 
- 		gpio_direction_input(130);
- 	} else {
--		printf("Error: unable to acquire sdio2 clk GPIOs\n");
-+		puts("Error: unable to acquire sdio2 clk GPIOs\n");
- 		sdio_direct = -1;
- 	}
- 
 @@ -337,7 +392,7 @@ int board_eth_init(bd_t *bis)
  	return rc;
  }
@@ -239,75 +221,11 @@ index 915f15b..b41b628 100644
  /*
   * IEN  - Input Enable
   * IDIS - Input Disable
-diff --git a/drivers/i2c/omap24xx_i2c.c b/drivers/i2c/omap24xx_i2c.c
-index 4ae237a..271ed60 100644
---- a/drivers/i2c/omap24xx_i2c.c
-+++ b/drivers/i2c/omap24xx_i2c.c
-@@ -73,7 +73,7 @@ void i2c_init(int speed, int slaveadd)
- 		fssclh -= I2C_HIGHSPEED_PHASE_ONE_SCLH_TRIM;
- 		if (((fsscll < 0) || (fssclh < 0)) ||
- 		    ((fsscll > 255) || (fssclh > 255))) {
--			printf("Error : I2C initializing first phase clock\n");
-+			puts("Error : I2C initializing first phase clock\n");
- 			return;
- 		}
- 
-@@ -84,7 +84,7 @@ void i2c_init(int speed, int slaveadd)
- 		hssclh -= I2C_HIGHSPEED_PHASE_TWO_SCLH_TRIM;
- 		if (((fsscll < 0) || (fssclh < 0)) ||
- 		    ((fsscll > 255) || (fssclh > 255))) {
--			printf("Error : I2C initializing second phase clock\n");
-+			puts("Error : I2C initializing second phase clock\n");
- 			return;
- 		}
- 
-@@ -99,7 +99,7 @@ void i2c_init(int speed, int slaveadd)
- 		fssclh -= I2C_FASTSPEED_SCLH_TRIM;
- 		if (((fsscll < 0) || (fssclh < 0)) ||
- 		    ((fsscll > 255) || (fssclh > 255))) {
--			printf("Error : I2C initializing clock\n");
-+			puts("Error : I2C initializing clock\n");
- 			return;
- 		}
- 
-@@ -118,7 +118,7 @@ void i2c_init(int speed, int slaveadd)
- 	writew(I2C_CON_EN, &i2c_base->con);
- 	while (!(readw(&i2c_base->syss) & I2C_SYSS_RDONE) && timeout--) {
- 		if (timeout <= 0) {
--			printf("ERROR: Timeout in soft-reset\n");
-+			puts("ERROR: Timeout in soft-reset\n");
- 			return;
- 		}
- 		udelay(1000);
-@@ -284,13 +284,13 @@ int i2c_read(uchar chip, uint addr, int alen, uchar *buffer, int len)
- 	}
- 
- 	if (addr + len > 256) {
--		printf("I2C read: address out of range\n");
-+		puts("I2C read: address out of range\n");
- 		return 1;
- 	}
- 
- 	for (i = 0; i < len; i++) {
- 		if (i2c_read_byte(chip, addr + i, &buffer[i])) {
--			printf("I2C read: I/O error\n");
-+			puts("I2C read: I/O error\n");
- 			i2c_init(CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
- 			return 1;
- 		}
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index 79eb466..4c6b2c3 100644
+index ce1ccf6..39b5383 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -249,7 +249,6 @@
-  */
- #define CONFIG_NR_DRAM_BANKS	2	/* CS1 may or may not be populated */
- #define PHYS_SDRAM_1		OMAP34XX_SDRC_CS0
--#define PHYS_SDRAM_1_SIZE	(32 << 20)	/* at least 32 MiB */
- #define PHYS_SDRAM_2		OMAP34XX_SDRC_CS1
- 
- /*-----------------------------------------------------------------------
-@@ -292,6 +291,13 @@
+@@ -286,6 +286,13 @@
  
  #endif /* (CONFIG_CMD_NET) */
  
@@ -321,11 +239,10 @@ index 79eb466..4c6b2c3 100644
  #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
  #define CONFIG_SYS_INIT_RAM_ADDR	0x4020f800
  #define CONFIG_SYS_INIT_RAM_SIZE	0x800
-@@ -301,4 +307,51 @@
+@@ -295,4 +302,50 @@
  
  #define CONFIG_SYS_CACHELINE_SIZE	64
  
-+
 +/* Defines for SPL */
 +#define CONFIG_SPL
 +#define CONFIG_SPL_NAND_SIMPLE
@@ -360,7 +277,7 @@ index 79eb466..4c6b2c3 100644
 +#define CONFIG_SYS_NAND_PAGE_SIZE	2048
 +#define CONFIG_SYS_NAND_OOBSIZE		64
 +#define CONFIG_SYS_NAND_BLOCK_SIZE	(128*1024)
-+#define CONFIG_SYS_NAND_BAD_BLOCK_POS	0
++#define CONFIG_SYS_NAND_BAD_BLOCK_POS	NAND_LARGE_BADBLOCK_POS
 +#define CONFIG_SYS_NAND_ECCPOS		{2, 3, 4, 5, 6, 7, 8, 9,\
 +						10, 11, 12, 13}
 +#define CONFIG_SYS_NAND_ECCSIZE		512
@@ -374,5 +291,5 @@ index 79eb466..4c6b2c3 100644
 +
  #endif				/* __CONFIG_H */
 -- 
-1.7.6.4
+1.7.4.4
 
