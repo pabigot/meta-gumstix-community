@@ -1,7 +1,7 @@
-From 4db3dfa5c3e26bd585f01a0832ff849fa157a3de Mon Sep 17 00:00:00 2001
+From e9726374d88f1fb1477d1ba71c8d17051cbbf4e0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 22:25:00 +0100
-Subject: [PATCH 4/4] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
+Subject: [PATCH 5/5] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
  0x80100000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -15,11 +15,11 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
  arch/arm/cpu/armv7/omap-common/spl.c  |    4 ++
  arch/arm/include/asm/arch-omap3/mem.h |   26 +++++++++++++++
- board/overo/config.mk                 |   28 ----------------
- board/overo/overo.c                   |   57 ++++++++++++++++++++++++++++++++-
+ board/overo/config.mk                 |   28 -----------------
+ board/overo/overo.c                   |   55 ++++++++++++++++++++++++++++++++-
  board/overo/overo.h                   |    5 +++
- include/configs/omap3_overo.h         |   53 ++++++++++++++++++++++++++++++
- 6 files changed, 144 insertions(+), 29 deletions(-)
+ include/configs/omap3_overo.h         |   53 +++++++++++++++++++++++++++++++
+ 6 files changed, 142 insertions(+), 29 deletions(-)
  delete mode 100644 board/overo/config.mk
 
 diff --git a/arch/arm/cpu/armv7/omap-common/spl.c b/arch/arm/cpu/armv7/omap-common/spl.c
@@ -117,7 +117,7 @@ index e7c471c..0000000
 -
 -CONFIG_SYS_TEXT_BASE = 0x80008000
 diff --git a/board/overo/overo.c b/board/overo/overo.c
-index 4a20c7f..9b3b1cd 100644
+index 4a20c7f..5583f98 100644
 --- a/board/overo/overo.c
 +++ b/board/overo/overo.c
 @@ -31,6 +31,7 @@
@@ -138,18 +138,18 @@ index 4a20c7f..9b3b1cd 100644
 +	/* board revisions <= R2410 connect 4030 irq_1 to gpio112             */
 +	/* these boards should return a revision number of 0                  */
 +	/* the code below forces a 4030 RTC irq to ensure that gpio112 is low */
-+	/*i2c_set_bus_num(TWL4030_I2C_BUS);
++	i2c_set_bus_num(TWL4030_I2C_BUS);
 +	data = 0x01;
 +	i2c_write(0x4B, 0x29, 1, &data, 1);
 +	data = 0x0c;
 +	i2c_write(0x4B, 0x2b, 1, &data, 1);
-+	i2c_read(0x4B, 0x2a, 1, &data, 1);*/
++	i2c_read(0x4B, 0x2a, 1, &data, 1);
 +#endif
 +
  	if (!gpio_request(112, "") &&
  	    !gpio_request(113, "") &&
  	    !gpio_request(115, "")) {
-@@ -126,6 +141,46 @@ int get_board_revision(void)
+@@ -126,6 +141,44 @@ int get_board_revision(void)
  	return revision;
  }
  
@@ -163,8 +163,6 @@ index 4a20c7f..9b3b1cd 100644
 +		u32 *mr)
 +{
 +	*mr = MICRON_V_MR_165;
-+	/* we need timer early for i2c */
-+	timer_init();
 +	switch (get_board_revision()) {
 +	case REVISION_0: /* Micron 1286MB/256MB, 1/2 banks of 128MB */
 +		*mcfg = MICRON_V_MCFG_165(128 << 20);
@@ -196,7 +194,7 @@ index 4a20c7f..9b3b1cd 100644
  /*
   * Routine: get_sdio2_config
   * Description: Return information about the wifi module connection
-@@ -337,7 +392,7 @@ int board_eth_init(bd_t *bis)
+@@ -337,7 +390,7 @@ int board_eth_init(bd_t *bis)
  	return rc;
  }
  
@@ -222,10 +220,10 @@ index 915f15b..b41b628 100644
   * IEN  - Input Enable
   * IDIS - Input Disable
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index ce1ccf6..39b5383 100644
+index 8f2e69d..37947c8 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -286,6 +286,13 @@
+@@ -285,6 +285,13 @@
  
  #endif /* (CONFIG_CMD_NET) */
  
@@ -239,7 +237,7 @@ index ce1ccf6..39b5383 100644
  #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
  #define CONFIG_SYS_INIT_RAM_ADDR	0x4020f800
  #define CONFIG_SYS_INIT_RAM_SIZE	0x800
-@@ -295,4 +302,50 @@
+@@ -294,4 +301,50 @@
  
  #define CONFIG_SYS_CACHELINE_SIZE	64
  

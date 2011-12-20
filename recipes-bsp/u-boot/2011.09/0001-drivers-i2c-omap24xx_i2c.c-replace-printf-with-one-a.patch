@@ -1,8 +1,8 @@
-From ee6489a9bfb99f6e99a69be7311eac9ddd3c0950 Mon Sep 17 00:00:00 2001
+From 7b12efceaf11de43c70b49c24c37761a6a7697b2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 21:41:30 +0100
-Subject: [PATCH 1/4] omap24xx_i2c.c cleanup: replace printf with one argument
- by puts
+Subject: [PATCH 1/5] drivers/i2c/omap24xx_i2c.c: replace printf with one
+ argument by puts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

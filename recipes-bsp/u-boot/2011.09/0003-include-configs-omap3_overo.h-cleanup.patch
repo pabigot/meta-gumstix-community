@@ -1,7 +1,7 @@
-From 134a9e7eae467a5747053275c8a682b0b3a989c5 Mon Sep 17 00:00:00 2001
+From a5facac6c71c9a771124dd53cb81a0aca0bcc33a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 22:06:21 +0100
-Subject: [PATCH 3/4] overo config: cleanup
+Subject: [PATCH 3/5] include/configs/omap3_overo.h: cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -9,17 +9,28 @@ Content-Transfer-Encoding: 8bit
 * remove unused macros
 * remove unused macro values
 * align tabs
+* remove Free Software Foundation address
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
- include/configs/omap3_overo.h |   64 ++++++++++++++++++----------------------
- 1 files changed, 29 insertions(+), 35 deletions(-)
+ include/configs/omap3_overo.h |   69 ++++++++++++++++++----------------------
+ 1 files changed, 31 insertions(+), 38 deletions(-)
 
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index 79eb466..ce1ccf6 100644
+index 79eb466..8f2e69d 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -23,41 +23,41 @@
+@@ -13,8 +13,7 @@
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+- * MA 02111-1307 USA
++ * Foundation, Inc.
+  */
+ 
+ #ifndef __CONFIG_H
+@@ -23,41 +22,41 @@
  /*
   * High Level Configuration Options
   */
@@ -76,7 +87,7 @@ index 79eb466..ce1ccf6 100644
  
  /*
   * Hardware drivers
-@@ -66,7 +66,7 @@
+@@ -66,7 +65,7 @@
  /*
   * NS16550 Configuration
   */
@@ -85,7 +96,7 @@ index 79eb466..ce1ccf6 100644
  
  #define CONFIG_SYS_NS16550
  #define CONFIG_SYS_NS16550_SERIAL
-@@ -85,13 +85,10 @@
+@@ -85,13 +84,10 @@
  #define CONFIG_BAUDRATE			115200
  #define CONFIG_SYS_BAUDRATE_TABLE	{4800, 9600, 19200, 38400, 57600, \
  					115200}
@@ -103,7 +114,7 @@ index 79eb466..ce1ccf6 100644
  
  /* commands to include */
  #include <config_cmd_default.h>
-@@ -113,31 +110,29 @@
+@@ -113,31 +109,29 @@
  #define CONFIG_CMD_NET		/* bootp, tftpboot, rarpboot	*/
  
  #define CONFIG_SYS_NO_FLASH
@@ -142,7 +153,7 @@ index 79eb466..ce1ccf6 100644
  
  #define CONFIG_SYS_MAX_NAND_DEVICE	1	/* Max number of NAND */
  						/* devices */
-@@ -249,7 +244,6 @@
+@@ -249,7 +243,6 @@
   */
  #define CONFIG_NR_DRAM_BANKS	2	/* CS1 may or may not be populated */
  #define PHYS_SDRAM_1		OMAP34XX_SDRC_CS0
@@ -150,7 +161,7 @@ index 79eb466..ce1ccf6 100644
  #define PHYS_SDRAM_2		OMAP34XX_SDRC_CS1
  
  /*-----------------------------------------------------------------------
-@@ -272,7 +266,7 @@
+@@ -272,7 +265,7 @@
  #define CONFIG_SYS_MONITOR_BASE		CONFIG_SYS_FLASH_BASE
  #define CONFIG_SYS_ONENAND_BASE		ONENAND_MAP
  
@@ -159,14 +170,17 @@ index 79eb466..ce1ccf6 100644
  #define ONENAND_ENV_OFFSET		0x240000 /* environment starts here */
  #define SMNAND_ENV_OFFSET		0x240000 /* environment starts here */
  
-@@ -286,7 +280,7 @@
+@@ -286,9 +279,9 @@
   *----------------------------------------------------------------------------
   */
  
 -#define CONFIG_SMC911X		1
 +#define CONFIG_SMC911X
  #define CONFIG_SMC911X_32_BIT
- #define CONFIG_SMC911X_BASE     0x2C000000
+-#define CONFIG_SMC911X_BASE     0x2C000000
++#define CONFIG_SMC911X_BASE		0x2C000000
+ 
+ #endif /* (CONFIG_CMD_NET) */
  
 -- 
 1.7.4.4

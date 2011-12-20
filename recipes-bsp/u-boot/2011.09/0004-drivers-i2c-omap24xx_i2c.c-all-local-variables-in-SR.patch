@@ -1,0 +1,46 @@
+From 5cea465cc6b1200e381ca1736e3285ba14b49c8c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Tue, 20 Dec 2011 00:03:32 +0100
+Subject: [PATCH 4/5] drivers/i2c/omap24xx_i2c.c: all local variables in SRAM
+ by setting defaults
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+At old overo boards TWL4030 RTC irq is connected to gpio112. Unfortunately
+this pin is also used for revision detection. Therefore we need to send
+shut-up to TWL4030 to avoid reading wrong revision. In SPL this must
+be done before SDRAM is set up because the type of SDRAM is revision dependent.
+By this patch it is ensured that all variables used by omap24xx_i2c.c are
+located in SRAM simply by initalizing them.
+
+Before this patch objdump -dSt showed:
+4020ae14 l     O .data	00000004 i2c_base
+80000068 l     O .bss	00000004 current_bus
+8000006c l     O .bss	0000000c bus_initialized
+
+After this patch objdump -dSt showed:
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ drivers/i2c/omap24xx_i2c.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/i2c/omap24xx_i2c.c b/drivers/i2c/omap24xx_i2c.c
+index 271ed60..f959a59 100644
+--- a/drivers/i2c/omap24xx_i2c.c
++++ b/drivers/i2c/omap24xx_i2c.c
+@@ -37,8 +37,8 @@ static void flush_fifo(void);
+ 
+ static struct i2c *i2c_base = (struct i2c *)I2C_DEFAULT_BASE;
+ 
+-static unsigned int bus_initialized[I2C_BUS_MAX];
+-static unsigned int current_bus;
++static unsigned int bus_initialized[I2C_BUS_MAX] = { [0 ... (I2C_BUS_MAX-1)] = 0 };
++static unsigned int current_bus = 0;
+ 
+ void i2c_init(int speed, int slaveadd)
+ {
+-- 
+1.7.4.4
+
