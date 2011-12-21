@@ -15,4 +15,8 @@ SRC_URI = "git://www.denx.de/git/u-boot.git;protocol=git \
 
 SRCREV = "06e42c6e2ce269667daecd6229d0b7c813838203"
 
+do_deploy_append () {
+	# ship also a version for good old x-loader
+	install ${S}/u-boot.bin ${DEPLOY_DIR_IMAGE}
+}
 
