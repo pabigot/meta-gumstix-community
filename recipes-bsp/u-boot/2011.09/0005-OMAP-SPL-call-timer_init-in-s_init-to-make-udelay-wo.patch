@@ -1,0 +1,44 @@
+From b6f2509a719557ce77c455f4b12e44e4e7bee020 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Wed, 21 Dec 2011 10:22:47 +0100
+Subject: [PATCH 5/6] OMAP SPL: call timer_init in s_init to make udelay work
+ earlier
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ arch/arm/cpu/armv7/omap-common/spl.c |    2 --
+ arch/arm/cpu/armv7/omap3/board.c     |    2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/cpu/armv7/omap-common/spl.c b/arch/arm/cpu/armv7/omap-common/spl.c
+index 9c35a09..74fea4f 100644
+--- a/arch/arm/cpu/armv7/omap-common/spl.c
++++ b/arch/arm/cpu/armv7/omap-common/spl.c
+@@ -115,8 +115,6 @@ void board_init_r(gd_t *id, ulong dummy)
+ 	mem_malloc_init(CONFIG_SYS_SPL_MALLOC_START,
+ 			CONFIG_SYS_SPL_MALLOC_SIZE);
+ 
+-	timer_init();
+-
+ #ifdef CONFIG_SPL_BOARD_INIT
+ 	spl_board_init();
+ #endif
+diff --git a/arch/arm/cpu/armv7/omap3/board.c b/arch/arm/cpu/armv7/omap3/board.c
+index 1f33c63..871aa37 100644
+--- a/arch/arm/cpu/armv7/omap3/board.c
++++ b/arch/arm/cpu/armv7/omap3/board.c
+@@ -230,6 +230,8 @@ void s_init(void)
+ 
+ #ifdef CONFIG_SPL_BUILD
+ 	preloader_console_init();
++
++	timer_init();
+ #endif
+ 
+ 	if (!in_sdram)
+-- 
+1.7.6.4
+

@@ -1,12 +1,11 @@
-From 7ba5a3c9b13707c997a2bcd1143c641882103bee Mon Sep 17 00:00:00 2001
+From b916bb9ead37ae28affa69f9e0cb0d1c0fa62846 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 21:42:17 +0100
-Subject: [PATCH 2/5] board/overo/overo.c: replace printf with one argument by
+Subject: [PATCH 2/6] board/overo/overo.c: replace printf with one argument by
  puts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
@@ -68,5 +67,5 @@ index 3c60b06..4a20c7f 100644
  
  	if (expansion_config.content == 1)
 -- 
-1.7.4.4
+1.7.6.4
 

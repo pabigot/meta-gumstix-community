@@ -1,0 +1,41 @@
+From cfe46a96d4c6e9f9c6d9029e881ebcf379aac8cb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Thu, 22 Dec 2011 00:05:46 +0100
+Subject: [PATCH] OMAP MMC: Add delay before waiting for status
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Loading of kernel from MMC created reproducable the following error message:
+
+| reading uImage
+| mmc_send_cmd: timedout waiting for stat!
+|
+| 2860468 bytes read
+
+Tested on the following boards:
+* OMAP3530-GP ES3.1, CPU-OPP2, L3-165MHz, Max CPU Clock 720 mHz
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ drivers/mmc/omap_hsmmc.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/mmc/omap_hsmmc.c b/drivers/mmc/omap_hsmmc.c
+index c38b9e6..151c107 100644
+--- a/drivers/mmc/omap_hsmmc.c
++++ b/drivers/mmc/omap_hsmmc.c
+@@ -197,6 +197,10 @@ static int mmc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd,
+ 	unsigned int flags, mmc_stat;
+ 	ulong start;
+ 
++	/* Delay added before checking the status */
++	if (cmd->cmdidx == MMC_CMD_SEND_STATUS)
++		udelay(1000); /* wait 1 ms */
++
+ 	start = get_timer(0);
+ 	while ((readl(&mmc_base->pstate) & DATI_MASK) == DATI_CMDDIS) {
+ 		if (get_timer(0) - start > MAX_RETRY_MS) {
+-- 
+1.7.6.4
+

@@ -1,7 +1,7 @@
-From e9726374d88f1fb1477d1ba71c8d17051cbbf4e0 Mon Sep 17 00:00:00 2001
+From d283864ace5ca33865c288cf96420ef5d2c377e6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 22:25:00 +0100
-Subject: [PATCH 5/5] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
+Subject: [PATCH 6/6] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
  0x80100000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -23,10 +23,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
  delete mode 100644 board/overo/config.mk
 
 diff --git a/arch/arm/cpu/armv7/omap-common/spl.c b/arch/arm/cpu/armv7/omap-common/spl.c
-index 9c35a09..7cec52f 100644
+index 74fea4f..1220eb5 100644
 --- a/arch/arm/cpu/armv7/omap-common/spl.c
 +++ b/arch/arm/cpu/armv7/omap-common/spl.c
-@@ -172,10 +172,13 @@ void preloader_console_init(void)
+@@ -170,10 +170,13 @@ void preloader_console_init(void)
  
  	printf("\nU-Boot SPL %s (%s - %s)\n", u_boot_rev, U_BOOT_DATE,
  		U_BOOT_TIME);
@@ -40,7 +40,7 @@ index 9c35a09..7cec52f 100644
  void __omap_rev_string(char *str)
  {
  	sprintf(str, "Revision detection unimplemented");
-@@ -183,3 +186,4 @@ void __omap_rev_string(char *str)
+@@ -181,3 +184,4 @@ void __omap_rev_string(char *str)
  
  void omap_rev_string(char *str)
  	__attribute__((weak, alias("__omap_rev_string")));
@@ -289,5 +289,5 @@ index 8f2e69d..37947c8 100644
 +
  #endif				/* __CONFIG_H */
 -- 
-1.7.4.4
+1.7.6.4
 

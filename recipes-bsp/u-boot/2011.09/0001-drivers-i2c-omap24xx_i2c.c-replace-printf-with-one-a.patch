@@ -1,12 +1,11 @@
-From 7b12efceaf11de43c70b49c24c37761a6a7697b2 Mon Sep 17 00:00:00 2001
+From 223e1df07b5375ba982a06265f09a052220423b8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 21:41:30 +0100
-Subject: [PATCH 1/5] drivers/i2c/omap24xx_i2c.c: replace printf with one
+Subject: [PATCH 1/6] drivers/i2c/omap24xx_i2c.c: replace printf with one
  argument by puts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
@@ -70,5 +69,5 @@ index 4ae237a..271ed60 100644
  			return 1;
  		}
 -- 
-1.7.4.4
+1.7.6.4
 
