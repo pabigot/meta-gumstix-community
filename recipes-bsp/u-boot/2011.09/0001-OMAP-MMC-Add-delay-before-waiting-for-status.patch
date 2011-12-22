@@ -1,4 +1,4 @@
-From c6a1f5bc02f8f38b378c17ffed6172a07e305817 Mon Sep 17 00:00:00 2001
+From 9950b8c6b88433e5d0c1d7f1076d07ae0b578568 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:05:46 +0100
 Subject: [PATCH] OMAP MMC: Add delay before waiting for status
@@ -6,7 +6,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Loading of kernel from MMC created reproducable the following error message:
+Loading kernel from MMC created the following error message reproducable:
 
 | reading uImage
 | mmc_send_cmd: timedout waiting for stat!
