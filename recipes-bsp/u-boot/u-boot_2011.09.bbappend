@@ -2,7 +2,7 @@ FILESEXTRAPATHS := "${THISDIR}/2011.09"
 
 COMPATIBLE_MACHINE_overo = "overo"
 
-PRINC = "3"
+PRINC = "4"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
            file://0001-drivers-i2c-omap24xx_i2c.c-replace-printf-with-one-a.patch \
@@ -15,7 +15,7 @@ SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
            file://fw_env.config \
           "
 
-SRCREV = "06e42c6e2ce269667daecd6229d0b7c813838203"
+SRCREV = "af44f4b2a56ea3b8f57fb117d4768a57e000ac24"
 
 do_deploy_append () {
 	# ship also a version for good old x-loader

@@ -1,4 +1,4 @@
-From 223e1df07b5375ba982a06265f09a052220423b8 Mon Sep 17 00:00:00 2001
+From c9348181bd114b194a830847cb3fe62387c30fb9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 21:41:30 +0100
 Subject: [PATCH 1/6] drivers/i2c/omap24xx_i2c.c: replace printf with one

@@ -1,4 +1,4 @@
-From cfe46a96d4c6e9f9c6d9029e881ebcf379aac8cb Mon Sep 17 00:00:00 2001
+From c6a1f5bc02f8f38b378c17ffed6172a07e305817 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:05:46 +0100
 Subject: [PATCH] OMAP MMC: Add delay before waiting for status
@@ -13,8 +13,11 @@ Loading of kernel from MMC created reproducable the following error message:
 |
 | 2860468 bytes read
 
-Tested on the following boards:
+Tested on overo with OMAP3530:
 * OMAP3530-GP ES3.1, CPU-OPP2, L3-165MHz, Max CPU Clock 720 mHz
+  Die ID #470e000400000000040398d31402100c
+* OMAP3530-GP ES3.1, CPU-OPP2, L3-165MHz, Max CPU Clock 600 mHz
+  Die ID #112000040000000004035c140101b011
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
@@ -22,7 +25,7 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
  1 files changed, 4 insertions(+), 0 deletions(-)
 
 diff --git a/drivers/mmc/omap_hsmmc.c b/drivers/mmc/omap_hsmmc.c
-index c38b9e6..151c107 100644
+index c38b9e6..ac91e5d 100644
 --- a/drivers/mmc/omap_hsmmc.c
 +++ b/drivers/mmc/omap_hsmmc.c
 @@ -197,6 +197,10 @@ static int mmc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd,
@@ -31,7 +34,7 @@ index c38b9e6..151c107 100644
  
 +	/* Delay added before checking the status */
 +	if (cmd->cmdidx == MMC_CMD_SEND_STATUS)
-+		udelay(1000); /* wait 1 ms */
++		udelay(1); /* wait 1 us */
 +
  	start = get_timer(0);
  	while ((readl(&mmc_base->pstate) & DATI_MASK) == DATI_CMDDIS) {

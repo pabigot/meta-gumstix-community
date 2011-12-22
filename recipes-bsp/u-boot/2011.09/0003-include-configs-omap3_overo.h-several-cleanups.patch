@@ -1,4 +1,4 @@
-From 93a34ebcc54d94bd1e3b81dbec6c493ac397fd4e Mon Sep 17 00:00:00 2001
+From d7750c98e8b119fda70893956d1476099fad0534 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 22:06:21 +0100
 Subject: [PATCH 3/6] include/configs/omap3_overo.h: several cleanups

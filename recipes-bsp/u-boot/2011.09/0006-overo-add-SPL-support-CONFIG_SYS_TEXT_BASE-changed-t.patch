@@ -1,4 +1,4 @@
-From d283864ace5ca33865c288cf96420ef5d2c377e6 Mon Sep 17 00:00:00 2001
+From ed43052f00e1fcaa55daf4afd87cad30c62cd4b4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 22:25:00 +0100
 Subject: [PATCH 6/6] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to

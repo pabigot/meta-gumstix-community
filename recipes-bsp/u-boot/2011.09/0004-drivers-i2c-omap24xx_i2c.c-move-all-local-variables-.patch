@@ -1,4 +1,4 @@
-From 16f9cc5056d2c1d4ff1eac214c715c0768c54a3c Mon Sep 17 00:00:00 2001
+From 241495561cfa62b381fd1ad03709cd270a642a2f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Tue, 20 Dec 2011 00:03:32 +0100
 Subject: [PATCH 4/6] drivers/i2c/omap24xx_i2c.c: move all local variables to

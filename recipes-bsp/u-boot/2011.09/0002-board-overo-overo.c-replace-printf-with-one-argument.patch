@@ -1,4 +1,4 @@
-From b916bb9ead37ae28affa69f9e0cb0d1c0fa62846 Mon Sep 17 00:00:00 2001
+From b9609ff353249e71c925d00884dfeecef9566f42 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Sun, 18 Dec 2011 21:42:17 +0100
 Subject: [PATCH 2/6] board/overo/overo.c: replace printf with one argument by
