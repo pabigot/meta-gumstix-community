@@ -1,5 +1,7 @@
 require linux.inc
 
+DEFAULT_PREFERENCE = "-99"
+
 DESCRIPTION = "Linux kernel for OMAP processors"
 KERNEL_IMAGETYPE = "uImage"
 
