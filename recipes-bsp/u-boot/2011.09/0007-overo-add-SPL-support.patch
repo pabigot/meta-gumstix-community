@@ -1,4 +1,4 @@
-From 7080691490a4fdaf9332b7953b7b4c952331cc1c Mon Sep 17 00:00:00 2001
+From 0092495cecb9b047f7f1d37d4b57beaa3b356fb4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:29 +0000
 Subject: [PATCH 7/7] overo: add SPL support
@@ -9,6 +9,7 @@ Content-Transfer-Encoding: 8bit
 * implementation based on ti beagleboard/omap3evm
 * timing data and i2c workaround for revision 0 boards taken from x-loader
 * run-tested with overo revision 0 and 1 / boot from NAND and SDcard
+* run-tested with x-loader
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
