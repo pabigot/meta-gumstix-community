@@ -5,13 +5,14 @@ COMPATIBLE_MACHINE_overo = "overo"
 PRINC = "4"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
+           file://0001-OMAP-MMC-Add-delay-before-waiting-for-status.patch \
            file://0001-drivers-i2c-omap24xx_i2c.c-replace-printf-with-one-a.patch \
            file://0002-board-overo-overo.c-replace-printf-with-one-argument.patch \
            file://0003-include-configs-omap3_overo.h-several-cleanups.patch \
            file://0004-drivers-i2c-omap24xx_i2c.c-move-all-local-variables-.patch \
            file://0005-OMAP-SPL-call-timer_init-in-s_init-to-make-udelay-wo.patch \
-           file://0006-overo-add-SPL-support-CONFIG_SYS_TEXT_BASE-changed-t.patch \
-           file://0001-OMAP-MMC-Add-delay-before-waiting-for-status.patch \
+           file://0006-omap_rev_string-output-to-stdout.patch \
+           file://0007-overo-add-SPL-support.patch \
            file://fw_env.config \
           "
 

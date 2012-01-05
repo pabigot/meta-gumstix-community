@@ -1,8 +1,7 @@
-From ed43052f00e1fcaa55daf4afd87cad30c62cd4b4 Mon Sep 17 00:00:00 2001
+From 7080691490a4fdaf9332b7953b7b4c952331cc1c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
-Date: Sun, 18 Dec 2011 22:25:00 +0100
-Subject: [PATCH 6/6] overo: add SPL support / CONFIG_SYS_TEXT_BASE changed to
- 0x80100000
+Date: Thu, 22 Dec 2011 00:49:29 +0000
+Subject: [PATCH 7/7] overo: add SPL support
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -13,38 +12,14 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---
- arch/arm/cpu/armv7/omap-common/spl.c  |    4 ++
- arch/arm/include/asm/arch-omap3/mem.h |   26 +++++++++++++++
- board/overo/config.mk                 |   28 -----------------
- board/overo/overo.c                   |   55 ++++++++++++++++++++++++++++++++-
- board/overo/overo.h                   |    5 +++
- include/configs/omap3_overo.h         |   53 +++++++++++++++++++++++++++++++
- 6 files changed, 142 insertions(+), 29 deletions(-)
+ arch/arm/include/asm/arch-omap3/mem.h |   26 +++++++++++++
+ board/overo/config.mk                 |   28 --------------
+ board/overo/overo.c                   |   65 ++++++++++++++++++++++++++++++++-
+ board/overo/overo.h                   |    9 +++++
+ include/configs/omap3_overo.h         |   52 ++++++++++++++++++++++++++
+ 5 files changed, 151 insertions(+), 29 deletions(-)
  delete mode 100644 board/overo/config.mk
 
-diff --git a/arch/arm/cpu/armv7/omap-common/spl.c b/arch/arm/cpu/armv7/omap-common/spl.c
-index 74fea4f..1220eb5 100644
---- a/arch/arm/cpu/armv7/omap-common/spl.c
-+++ b/arch/arm/cpu/armv7/omap-common/spl.c
-@@ -170,10 +170,13 @@ void preloader_console_init(void)
- 
- 	printf("\nU-Boot SPL %s (%s - %s)\n", u_boot_rev, U_BOOT_DATE,
- 		U_BOOT_TIME);
-+#if !defined(CONFIG_OMAP3_OVERO)
- 	omap_rev_string(rev_string_buffer);
- 	printf("Texas Instruments %s\n", rev_string_buffer);
-+#endif
- }
- 
-+#if !defined(CONFIG_OMAP3_OVERO)
- void __omap_rev_string(char *str)
- {
- 	sprintf(str, "Revision detection unimplemented");
-@@ -181,3 +184,4 @@ void __omap_rev_string(char *str)
- 
- void omap_rev_string(char *str)
- 	__attribute__((weak, alias("__omap_rev_string")));
-+#endif
 diff --git a/arch/arm/include/asm/arch-omap3/mem.h b/arch/arm/include/asm/arch-omap3/mem.h
 index 5fd02d4..4ca929e 100644
 --- a/arch/arm/include/asm/arch-omap3/mem.h
@@ -117,7 +92,7 @@ index e7c471c..0000000
 -
 -CONFIG_SYS_TEXT_BASE = 0x80008000
 diff --git a/board/overo/overo.c b/board/overo/overo.c
-index 4a20c7f..5583f98 100644
+index 4a20c7f..2534e47 100644
 --- a/board/overo/overo.c
 +++ b/board/overo/overo.c
 @@ -31,6 +31,7 @@
@@ -128,7 +103,24 @@ index 4a20c7f..5583f98 100644
  #include <asm/io.h>
  #include <asm/arch/mmc_host_def.h>
  #include <asm/arch/mux.h>
-@@ -107,6 +108,20 @@ int get_board_revision(void)
+@@ -100,6 +101,16 @@ int board_init(void)
+ }
+ 
+ /*
++ * Routine: omap_rev_string
++ * Description: For SPL builds output board rev
++ */
++#ifdef CONFIG_SPL_BUILD
++void omap_rev_string()
++{
++}
++#endif
++
++/*
+  * Routine: get_board_revision
+  * Description: Returns the board revision
+  */
+@@ -107,6 +118,20 @@ int get_board_revision(void)
  {
  	int revision;
  
@@ -149,7 +141,7 @@ index 4a20c7f..5583f98 100644
  	if (!gpio_request(112, "") &&
  	    !gpio_request(113, "") &&
  	    !gpio_request(115, "")) {
-@@ -126,6 +141,44 @@ int get_board_revision(void)
+@@ -126,6 +151,44 @@ int get_board_revision(void)
  	return revision;
  }
  
@@ -194,7 +186,7 @@ index 4a20c7f..5583f98 100644
  /*
   * Routine: get_sdio2_config
   * Description: Return information about the wifi module connection
-@@ -337,7 +390,7 @@ int board_eth_init(bd_t *bis)
+@@ -337,7 +400,7 @@ int board_eth_init(bd_t *bis)
  	return rc;
  }
  
@@ -204,13 +196,17 @@ index 4a20c7f..5583f98 100644
  {
  	omap_mmc_init(0);
 diff --git a/board/overo/overo.h b/board/overo/overo.h
-index 915f15b..b41b628 100644
+index 915f15b..60d696e 100644
 --- a/board/overo/overo.h
 +++ b/board/overo/overo.h
-@@ -33,6 +33,11 @@ const omap3_sysinfo sysinfo = {
+@@ -33,6 +33,15 @@ const omap3_sysinfo sysinfo = {
  #endif
  };
  
++#ifdef CONFIG_SPL_BUILD
++void omap_rev_string();
++#endif
++
 +/* overo revisions */
 +#define REVISION_0	0x0
 +#define REVISION_1	0x1
@@ -220,24 +216,22 @@ index 915f15b..b41b628 100644
   * IEN  - Input Enable
   * IDIS - Input Disable
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index 8f2e69d..37947c8 100644
+index 8f2e69d..5f29839 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -285,6 +285,13 @@
+@@ -285,6 +285,11 @@
  
  #endif /* (CONFIG_CMD_NET) */
  
 +/*
-+ * 1MB into the SDRAM to allow for SPL's bss at the beginning of SDRAM
-+ * 64 bytes before this address should be set aside for u-boot.img's
-+ * header. That is 0x800FFFC0--0x80100000 should not be used for any
-+ * other needs.
++ * Leave it at 0x80008000 to allow booting new u-boot.bin with X-loader
++ * and older u-boot.bin with the new U-Boot SPL.
 + */
-+#define CONFIG_SYS_TEXT_BASE		0x80100000
++#define CONFIG_SYS_TEXT_BASE		0x80008000
  #define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
  #define CONFIG_SYS_INIT_RAM_ADDR	0x4020f800
  #define CONFIG_SYS_INIT_RAM_SIZE	0x800
-@@ -294,4 +301,50 @@
+@@ -294,4 +299,51 @@
  
  #define CONFIG_SYS_CACHELINE_SIZE	64
  
@@ -248,7 +242,10 @@ index 8f2e69d..37947c8 100644
 +#define CONFIG_SPL_MAX_SIZE		(45 * 1024)
 +#define CONFIG_SPL_STACK		LOW_LEVEL_SRAM_STACK
 +
-+#define CONFIG_SPL_BSS_START_ADDR	0x80000000
++/* move malloc and bss high to prevent clashing with the main image */
++#define CONFIG_SYS_SPL_MALLOC_START	0x87000000
++#define CONFIG_SYS_SPL_MALLOC_SIZE	0x80000
++#define CONFIG_SPL_BSS_START_ADDR	0x87080000 	/* end of minimum RAM */
 +#define CONFIG_SPL_BSS_MAX_SIZE		0x80000		/* 512 KB */
 +
 +#define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR	0x300 /* address 0x60000 */
@@ -266,8 +263,6 @@ index 8f2e69d..37947c8 100644
 +#define CONFIG_SPL_NAND_SUPPORT
 +#define CONFIG_SPL_POWER_SUPPORT
 +#define CONFIG_SPL_LDSCRIPT		"$(CPUDIR)/omap-common/u-boot-spl.lds"
-+#define CONFIG_SYS_SPL_MALLOC_START	0x80208000
-+#define CONFIG_SYS_SPL_MALLOC_SIZE	0x100000
 +
 +/* NAND boot config */
 +#define CONFIG_SYS_NAND_5_ADDR_CYCLE
@@ -289,5 +284,5 @@ index 8f2e69d..37947c8 100644
 +
  #endif				/* __CONFIG_H */
 -- 
-1.7.6.4
+1.7.4.4
 

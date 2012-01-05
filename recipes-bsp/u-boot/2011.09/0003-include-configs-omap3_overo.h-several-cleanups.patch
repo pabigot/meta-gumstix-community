@@ -1,7 +1,7 @@
-From d7750c98e8b119fda70893956d1476099fad0534 Mon Sep 17 00:00:00 2001
+From 46ce56fe56d03c102c7dacc3288faa03e0be1e23 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
-Date: Sun, 18 Dec 2011 22:06:21 +0100
-Subject: [PATCH 3/6] include/configs/omap3_overo.h: several cleanups
+Date: Thu, 22 Dec 2011 00:49:26 +0000
+Subject: [PATCH 3/7] include/configs/omap3_overo.h: several cleanups
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -183,5 +183,5 @@ index 79eb466..8f2e69d 100644
  #endif /* (CONFIG_CMD_NET) */
  
 -- 
-1.7.6.4
+1.7.4.4
 
