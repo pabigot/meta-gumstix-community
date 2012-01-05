@@ -2,6 +2,7 @@ FILESEXTRAPATHS := "${THISDIR}/linux-3.0"
 
 COMPATIBLE_MACHINE_overo = "(overo)"
 
+PARALLEL_MAKE = ""
 PARALLEL_MAKEINST = ""
 
 # We need our own increment
