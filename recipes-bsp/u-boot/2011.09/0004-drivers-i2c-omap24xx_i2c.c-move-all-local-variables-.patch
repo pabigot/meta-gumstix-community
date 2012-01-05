@@ -1,8 +1,8 @@
 From 3d6b0e09b658bd9640a4054e0061933330ede96a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:27 +0000
-Subject: [PATCH 4/7] drivers/i2c/omap24xx_i2c.c: move all local variables to
- SRAM
+Subject: [PATCH v3 4/7] drivers/i2c/omap24xx_i2c.c: move all local variables
+ to SRAM
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

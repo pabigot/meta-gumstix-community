@@ -1,14 +1,13 @@
-From d2f83515b387d2e46dec796c936ff19e8203e75a Mon Sep 17 00:00:00 2001
+From fa2cda34da297f80af85dabea62e8b25a996fa4b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 5 Jan 2012 00:11:55 +0100
-Subject: [PATCH 6/7] omap_rev_string: output to stdout
+Subject: [PATCH v3 6/7] omap_rev_string: output to stdout
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-* reduce code size
 * avoid potential buffer overflows
-* allow SPL not to output "Texas Instruments Revision detection unimplemented"
+* allow SPL-build not to output "Texas Instruments Revision detection unimplemented"
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
 ---

@@ -2,7 +2,7 @@ FILESEXTRAPATHS := "${THISDIR}/2011.09"
 
 COMPATIBLE_MACHINE_overo = "overo"
 
-PRINC = "4"
+PRINC = "5"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
            file://0001-OMAP-MMC-Add-delay-before-waiting-for-status.patch \

@@ -1,8 +1,8 @@
 From f5d9ba902d12f39f2fbd57818b32f3dc79f94278 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:28 +0000
-Subject: [PATCH 5/7] OMAP SPL: call timer_init in s_init to make udelay work
- earlier
+Subject: [PATCH v3 5/7] OMAP SPL: call timer_init in s_init to make udelay
+ work earlier
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

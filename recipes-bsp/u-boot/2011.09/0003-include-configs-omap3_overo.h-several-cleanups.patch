@@ -1,7 +1,7 @@
 From 46ce56fe56d03c102c7dacc3288faa03e0be1e23 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:26 +0000
-Subject: [PATCH 3/7] include/configs/omap3_overo.h: several cleanups
+Subject: [PATCH v3 3/7] include/configs/omap3_overo.h: several cleanups
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

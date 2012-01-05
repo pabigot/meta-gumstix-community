@@ -1,7 +1,7 @@
-From 0092495cecb9b047f7f1d37d4b57beaa3b356fb4 Mon Sep 17 00:00:00 2001
+From 602675d0d7fdb01d17cff0244be6b13c844979cc Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:29 +0000
-Subject: [PATCH 7/7] overo: add SPL support
+Subject: [PATCH v3 7/7] overo: add SPL support
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

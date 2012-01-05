@@ -1,8 +1,8 @@
 From b95114713ab59a0588e1305f0eb58dc61e051107 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
 Date: Thu, 22 Dec 2011 00:49:25 +0000
-Subject: [PATCH 2/7] board/overo/overo.c: replace printf with one argument by
- puts
+Subject: [PATCH v3 2/7] board/overo/overo.c: replace printf with one argument
+ by puts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
