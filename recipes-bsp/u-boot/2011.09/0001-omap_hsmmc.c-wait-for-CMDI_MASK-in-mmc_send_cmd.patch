@@ -1,0 +1,33 @@
+From 9914a8f8e0f7b2f68cd7fc97a3041b51a9d613bf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmx.de>
+Date: Mon, 9 Jan 2012 09:51:25 +0100
+Subject: [PATCH] omap_hsmmc.c: wait for CMDI_MASK in mmc_send_cmd
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+taken from http://patchwork.ozlabs.org/patch/134226/
+discussed at: http://lists.denx.de/pipermail/u-boot/2012-January/114623.html
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmx.de>
+---
+ drivers/mmc/omap_hsmmc.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/mmc/omap_hsmmc.c b/drivers/mmc/omap_hsmmc.c
+index c38b9e6..5f1cecd 100644
+--- a/drivers/mmc/omap_hsmmc.c
++++ b/drivers/mmc/omap_hsmmc.c
+@@ -198,7 +198,8 @@ static int mmc_send_cmd(struct mmc *mmc, struct mmc_cmd *cmd,
+ 	ulong start;
+ 
+ 	start = get_timer(0);
+-	while ((readl(&mmc_base->pstate) & DATI_MASK) == DATI_CMDDIS) {
++#define CMDI_MASK                      (0x1 << 0)
++	while ((readl(&mmc_base->pstate) & (DATI_MASK | CMDI_MASK))) {
+ 		if (get_timer(0) - start > MAX_RETRY_MS) {
+ 			printf("%s: timedout waiting for cmddis!\n", __func__);
+ 			return TIMEOUT;
+-- 
+1.7.6.4
+

@@ -2,10 +2,10 @@ FILESEXTRAPATHS := "${THISDIR}/2011.09"
 
 COMPATIBLE_MACHINE_overo = "overo"
 
-PRINC = "5"
+PRINC = "6"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
-           file://0001-OMAP-MMC-Add-delay-before-waiting-for-status.patch \
+           file://0001-omap_hsmmc.c-wait-for-CMDI_MASK-in-mmc_send_cmd.patch \
            file://0001-drivers-i2c-omap24xx_i2c.c-replace-printf-with-one-a.patch \
            file://0002-board-overo-overo.c-replace-printf-with-one-argument.patch \
            file://0003-include-configs-omap3_overo.h-several-cleanups.patch \
