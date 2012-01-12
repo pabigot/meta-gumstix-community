@@ -1,9 +1,5 @@
 based on http://www.gumstix.org/how-to/70-writing-images-to-flash.html
 
-Note: after nand operations the board should be powered off & on. Oterwise
-the board revision detection fails.
-
-
 nand erase.chip
 mmc rescan 0
 
