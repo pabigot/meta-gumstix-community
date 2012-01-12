@@ -2,6 +2,10 @@ FILESEXTRAPATHS := "${THISDIR}/linux-3.0"
 
 COMPATIBLE_MACHINE_overo = "(overo)"
 
+PV = "3.0.12"
+# v3.0.12 tag
+SRCREV_pn-${PN} = "ac6766564c0305ca020fe747dfd7dbdf0881369d"
+
 PARALLEL_MAKE = ""
 PARALLEL_MAKEINST = ""
 
