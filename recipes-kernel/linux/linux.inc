@@ -6,6 +6,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 inherit kernel siteinfo
 
+# Try to build & install perf
+require recipes-kernel/linux/linux-tools.inc
+
 RPSRC = "http://www.rpsys.net/openzaurus/patches/archive"
 
 # Enable OABI compat for people stuck with obsolete userspace
@@ -47,7 +50,6 @@ KERNEL_DEVICETREE_mpc8323e-rdb = "arch/${ARCH}/boot/dts/mpc832x_rdb.dts"
 KERNEL_DEVICETREE_mpc8544ds = "arch/${ARCH}/boot/dts/mpc8544ds.dts"
 KERNEL_DEVICETREE_mpc8641-hpcn = "arch/${ARCH}/boot/dts/mpc8641_hpcn.dts"
 KERNEL_DEVICETREE_p1020rdb = "arch/${ARCH}/boot/dts/p1020rdb.dts"
-KERNEL_DEVICETREE_p2020rdb = "arch/${ARCH}/boot/dts/p2020rdb.dts"
 KERNEL_DEVICETREE_p2020ds = "arch/${ARCH}/boot/dts/p2020ds.dts"
 KERNEL_DEVICETREE_sequoia = "arch/${ARCH}/boot/dts/sequoia.dts"
 KERNEL_DEVICETREE_tqm8540 = "arch/${ARCH}/boot/dts/tqm8540.dts"
@@ -56,22 +58,17 @@ KERNEL_DEVICETREE_xilinx-ml507 = "arch/${ARCH}/boot/dts/virtex440-ml507.dts"
 KERNEL_DEVICETREE_FLAGS = "-R 8 -S 0x3000"
 
 CORTEXA8FIXUP ?= "yes"
-LOCALVERSION ?= ""
 
 python __anonymous () {
 
     import bb
     
     devicetree = bb.data.getVar('KERNEL_DEVICETREE', d, 1) or ''
-    machine = bb.data.getVar('MACHINE', d, 1)
     if devicetree:
     	depends = bb.data.getVar("DEPENDS", d, 1)
     	bb.data.setVar("DEPENDS", "%s dtc-native" % depends, d)
     	packages = bb.data.getVar("PACKAGES", d, 1)
     	bb.data.setVar("PACKAGES", "%s kernel-devicetree" % packages, d)
-    if 'nokia900' in machine or 'om-gta0' in machine or 'eee701' in machine:
-        depends = bb.data.getVar("DEPENDS", d, 1)
-        bb.data.setVar("DEPENDS", "%s lzma-native" % depends, d)
 }
 
 do_configure_prepend() {
@@ -82,9 +79,7 @@ do_configure_prepend() {
         # see https://patchwork.kernel.org/patch/11166/
         # committed in 2.6.29 (commit d15bd1067b1fcb2b7250d22bc0c7c7fea0b759f7)
 
-        if [ -e ${S}/scripts/unifdef.c ]; then
-                sed -i -e 's/getline/parseline/g' ${S}/scripts/unifdef.c
-        fi
+        sed -i -e 's/getline/parseline/g' ${S}/scripts/unifdef.c
 
 
         echo "" > ${S}/.config
@@ -120,7 +115,7 @@ do_configure_prepend() {
         fi
 
         # Enable thumb2 fixup for specific issue in angstrom toolchains when used on A8 r1p[012] silicon
-        if [ "${DISTRO_NAME}" = "Angstrom" -a "${CORTEXA8FIXUP}" = "yes" ] ; then
+        if [ "${CORTEXA8FIXUP}" = "yes" ] ; then
             sed -i -e /CONFIG_ARM_ERRATA_430973/d ${WORKDIR}/defconfig
             echo "CONFIG_ARM_ERRATA_430973=y" >> ${S}/.config
         fi
@@ -144,7 +139,7 @@ do_configure_prepend() {
             -e '/CONFIG_LOCALVERSION_AUTO/d' \
 	    < '${WORKDIR}/defconfig' >>'${S}/.config'
 
-        echo 'CONFIG_LOCALVERSION="${LOCALVERSION}"' >>${S}/.config
+        echo 'CONFIG_LOCALVERSION=""' >>${S}/.config
         echo '# CONFIG_LOCALVERSION_AUTO is not set' >>${S}/.config
 
         #
@@ -233,6 +228,10 @@ do_configure_append() {
 	fi
 }
 
+# bitbake.conf only prepends PARALLEL make in tasks called do_compile, which isn't the case for compile_modules
+# So explicitly enable it for that in here
+EXTRA_OEMAKE = "${PARALLEL_MAKE} "
+
 do_install_append() {
 	oe_runmake headers_install INSTALL_HDR_PATH=${D}${exec_prefix}/src/linux-${KERNEL_VERSION} ARCH=$ARCH
 }
@@ -265,3 +264,19 @@ pkg_postrm_kernel-devicetree () {
 	cd /${KERNEL_IMAGEDEST}; update-alternatives --remove devicetree devicetree-${KERNEL_VERSION} || true
 }
 
+# Automatically depend on lzop-native if CONFIG_KERNEL_LZO is enabled
+python () {
+    try:
+        defconfig = bb.fetch2.localpath('file://defconfig', d)
+    except bb.fetch2.FetchError:
+        return
+
+    try:
+        configfile = open(defconfig)
+    except IOError:
+        return
+
+    if 'CONFIG_KERNEL_LZO=y\n' in configfile.readlines():
+        depends = d.getVar('DEPENDS', False)
+        d.setVar('DEPENDS', depends + ' lzop-native')
+}
