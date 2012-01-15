@@ -2,7 +2,7 @@ FILESEXTRAPATHS := "${THISDIR}/2011.09"
 
 COMPATIBLE_MACHINE_overo = "overo"
 
-PRINC = "6"
+PRINC = "7"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
            file://0001-omap_hsmmc.c-wait-for-CMDI_MASK-in-mmc_send_cmd.patch \

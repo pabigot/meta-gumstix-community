@@ -164,7 +164,7 @@ index 4a20c7f..2534e47 100644
 +		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
 +		break;
 +	case REVISION_1: /* Micron 256MB/512MB, 1/2 banks of 256MB */
-+		*mcfg = MICRON_V_MCFG_165(256 << 20);
++		*mcfg = MICRON_V_MCFG_200(256 << 20);
 +		*ctrla = MICRON_V_ACTIMA_165;
 +		*ctrlb = MICRON_V_ACTIMB_165;
 +		*rfr_ctrl = SDP_3430_SDRC_RFR_CTRL_165MHz;
