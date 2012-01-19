@@ -11,10 +11,21 @@
 MACHINE=overo
 
 SelectRootfs() {
+	# OE environment found?
+	if [ -z $OE_BASE ]; then
+		echo "The environment variable OE_BASE is not set. It is usually set before running bitbake."
+		exit 1
+	fi
 	iCount=0
 	strSelection=
-	for BuildPath in ${OE_BUILD_TMPDIR}-*; do
-		echo $BuildPath
+	for grep_result in `grep -h TMPDIR $OE_BASE/conf/*.conf | sed -e s/' '/''/g -e s/'\"'/''/g`; do
+		# exclude comments
+		tmp_dir=`echo $grep_result | grep '^TMPDIR='`
+		if [ ! -z $tmp_dir ]; then
+			TMPDIR=`echo $tmp_dir | sed -e s/'TMPDIR='/''/g`
+		fi
+	done
+	for BuildPath in ${TMPDIR}-*; do
 		for i in `find ${BuildPath}/deploy/images/${MACHINE} -name *.tar.bz2 | sort` ; do
 			iCount=`expr $iCount + 1`
 			RootFileNameArr[${iCount}]=$i
@@ -22,6 +33,7 @@ SelectRootfs() {
 		done
 	done
 
+	# were files found?
 	if [ $iCount -eq 0 ]; then
 		echo "No rootfs files found in ${OE_BUILD_TMPDIR}-\*"
 		exit 1
@@ -48,11 +60,6 @@ SelectRootfs() {
 }
 
 run_user() {
-	if [ -z $OE_BUILD_TMPDIR ]; then
-		echo "The environment variable $OE_BUILD_TMPDIR is not set. It is usually set befor running bitbake."
-		exit 1
-	fi
-
 	if [ -z $DevicePath ]; then
 		# DevicePath for memory card
 		SelectCardDevice || exit 1
