@@ -2,9 +2,10 @@
 
 # part-card.sh
 # (c) Copyright 2012 Andreas Müller <schnitzeltony@gmx.de>
+# Licensed under terms of GPLv2
 #
-# This script wraps http://omappedia.org/wiki/Minimal-FS_SD_Configuration
-# by dialog based GUI.
+# This script prepares partitions on SDCards. It wraps
+# http://omappedia.org/wiki/Minimal-FS_SD_Configuration by dialog based GUI.
 
 # for debugging set DEBUG=echo
 DEBUG=
