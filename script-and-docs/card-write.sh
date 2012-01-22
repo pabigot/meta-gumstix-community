@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# write-card-overo.sh
+# write-card.sh
 # (c) Copyright 2012 Andreas Müller <schnitzeltony@gmx.de>
 # Licensed under terms of GPLv2
 #
@@ -8,7 +8,7 @@
 # select card device and rootfs a dialog based GUI is used. To work properly
 # the OE environment variable OE_BUILD_TMPDIR must be set.
 
-MACHINE=overo
+DEFAULT_MACHINE=overo
 
 SelectRootfs() {
 	# OE environment found?
@@ -118,6 +118,10 @@ run_root() {
 }
 
 source `dirname $0`/tools.inc
+
+if [ -z $MACHINE ]; then
+	MACHINE=$DEFAULT_MACHINE
+fi
 
 DevicePath=$1
 RootFsFile=$2
