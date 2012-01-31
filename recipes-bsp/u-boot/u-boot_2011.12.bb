@@ -5,12 +5,13 @@ UBOOT_BINARY = "u-boot.img"
 UBOOT_IMAGE = "u-boot-${MACHINE}-${PV}-${PR}.img"
 UBOOT_SYMLINK = "u-boot-${MACHINE}.img"
 
+PR = "r1"
 PV = "2011.12"
 
 COMPATIBLE_MACHINE = "overo"
 
 SRC_URI = "git://www.denx.de/git/u-boot.git;branch=master;protocol=git \
-           file://0001-omap_hsmmc.c-wait-for-CMDI_MASK-in-mmc_send_cmd.patch \
+           file://0001-U-Boot-omap_hsmmc-Wait-for-CMDI-to-be-clear.patch \
            file://0002-cleanup_before_linux-void-Don-t-call-v7_outer_cache_.patch \
            file://0003-config-Always-use-GNU-ld.patch \
            file://0004-overo-fix-crashes-for-boards-revision-1.patch \
