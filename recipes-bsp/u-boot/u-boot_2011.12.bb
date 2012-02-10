@@ -5,7 +5,7 @@ UBOOT_BINARY = "u-boot.img"
 UBOOT_IMAGE = "u-boot-${MACHINE}-${PV}-${PR}.img"
 UBOOT_SYMLINK = "u-boot-${MACHINE}.img"
 
-PR = "r1"
+PR = "r2"
 PV = "2011.12"
 
 COMPATIBLE_MACHINE = "overo"
