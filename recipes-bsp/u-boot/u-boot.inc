@@ -47,7 +47,7 @@ do_install () {
 
 FILES_${PN} = "/boot"
 # no gnu_hash in uboot.bin, by design, so skip QA
-INSANE_SKIP_${PN} = True
+INSANE_SKIP_${PN} = "True"
 
 PACKAGES += "${PN}-fw-utils"
 FILES_${PN}-fw-utils = "${sysconfdir} ${base_sbindir}"
