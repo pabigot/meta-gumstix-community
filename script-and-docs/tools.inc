@@ -82,6 +82,7 @@ chk_root() {
 			exec su -c "${0} $RootParams"
 		else
 			echo -e "\nEnter valid sudo password if you are sure you want to continue"
+			sudo -k
 			# Call this prog as root
 			exec sudo "${0} $RootParams"
 		fi
