@@ -83,7 +83,7 @@ chk_root() {
 		else
 			echo -e "\nEnter valid sudo password if you are sure you want to continue"
 			# Call this prog as root
-			exec sudo su -c "${0} $RootParams"
+			exec sudo "${0} $RootParams"
 		fi
 		return 1	# sice we're 'execing' above, we wont reach this exit
 				# unless something goes wrong.
