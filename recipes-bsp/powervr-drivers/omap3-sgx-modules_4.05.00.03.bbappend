@@ -1,3 +1,3 @@
-PRINC = "1"
+PRINC = "2"
 
-TI_PLATFORM_overo = "omap3"
+MAKE_TARGETS_overo = " BUILD=${PVRBUILD} TI_PLATFORM=omap3"
