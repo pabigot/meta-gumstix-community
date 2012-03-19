@@ -84,7 +84,7 @@ chk_root() {
 			echo -e "\nEnter valid sudo password if you are sure you want to continue"
 			sudo -k
 			# Call this prog as root
-			exec sudo "${0} $RootParams"
+			exec sudo ${0} $RootParams
 		fi
 		return 1	# sice we're 'execing' above, we wont reach this exit
 				# unless something goes wrong.
