@@ -10,7 +10,7 @@ PARALLEL_MAKE = ""
 PARALLEL_MAKEINST = ""
 
 # We need our own increment
-MACHINE_KERNEL_PR_append = "1"
+MACHINE_KERNEL_PR_append = "2"
 
 SRC_URI_append_overo = " file://logo_linux_clut224.ppm \
 "
