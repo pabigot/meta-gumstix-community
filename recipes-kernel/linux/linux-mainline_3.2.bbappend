@@ -11,7 +11,7 @@ SRCREV_pn-${PN} = "52c6b95f8a2edaff98b779f15b2f4d69b61b18b9"
 # options.
 EXTRA_OEMAKE = ""
 # TODO: Kernel currently only uses PARALLEL_MAKE (error occures on install)
-PARALLEL_MAKE = ""
+#PARALLEL_MAKE = ""
 #PARALLEL_MAKEINST = ""
 
 # We need our own increment
