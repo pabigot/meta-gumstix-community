@@ -28,5 +28,7 @@ SRC_URI_append_overo = "\
 	file://TWL4030/0006-Enabling-Hwmon-driver-for-twl4030-madc.patch \
 	\
 	file://sakoman/0001-board-overo.c-use-sakoman-s-board-init-code.patch \
+	\
+	file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
 	${OVERO_BOOT_LOGO} \
 "
