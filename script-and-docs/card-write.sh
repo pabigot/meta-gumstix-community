@@ -40,7 +40,7 @@ SelectRootfs() {
 	fi
 	
 	dialog --title 'Select rootfs'\
-	--menu 'Move using [UP] [DOWN],[Enter] to select' 10 100 $iCount\
+	--menu 'Move using [UP] [DOWN],[Enter] to select' 30 100 $iCount\
 	${strSelection}\
 	2>/tmp/menuitem.$$
 
