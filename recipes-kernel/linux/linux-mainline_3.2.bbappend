@@ -15,7 +15,7 @@ PARALLEL_MAKE = ""
 #PARALLEL_MAKEINST = ""
 
 # We need our own increment
-MACHINE_KERNEL_PR_append = "2"
+MACHINE_KERNEL_PR_append = "3"
 
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
@@ -32,6 +32,10 @@ SRC_URI_append_overo = "\
 	file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
 	\
 	file://MMC/0001-mmc-omap-add-sdio-interrupt-support.patch \
+	\
+	file://I2C/0001-OMAP-I2C-Fix-timeout-problem-during-suspend.patch \
+	\
+	file://DSS/0001-OMAPDSS-use-sync-versions-of-pm_runtime_put.patch \
 	\
 	${OVERO_BOOT_LOGO} \
 "
