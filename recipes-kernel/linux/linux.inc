@@ -19,11 +19,6 @@ UDEV_GE_141 ?= "0"
 
 # Specify the commandline for your device
 
-# Boot from mmc
-CMDLINE_at91sam9263ek = "mem=64M console=ttyS0,115200 root=/dev/mmcblk0p1 rootfstype=ext2 rootdelay=5"
-# Boot from nfs
-#CMDLINE_at91sam9263ek = "mem=64M console=ttyS0,115200 root=301 root=/dev/nfs nfsroot=172.20.3.1:/data/at91 ip=172.20.0.5:::255.255.0.0"
-
 # Set the verbosity of kernel messages during runtime
 # You can define CMDLINE_DEBUG in your local.conf or distro.conf to override this behaviour  
 CMDLINE_DEBUG ?= '${@base_conditional("DISTRO_TYPE", "release", "quiet", "debug", d)}'
@@ -37,23 +32,7 @@ LOGO_SIZE ?= "."
 
 FILES_kernel-devicetree = "/boot/devicetree*"
 
-KERNEL_DEVICETREE_boc01 = "${WORKDIR}/boc01.dts"
-KERNEL_DEVICETREE_calamari = "arch/${ARCH}/boot/dts/mpc8536ds.dts"
-KERNEL_DEVICETREE_canyonlands = "arch/${ARCH}/boot/dts/canyonlands.dts"
-KERNEL_DEVICETREE_kilauea = "arch/${ARCH}/boot/dts/kilauea.dts"
-KERNEL_DEVICETREE_lite5200 = "arch/${ARCH}/boot/dts/lite5200.dts"
-KERNEL_DEVICETREE_lsppchd = "arch/${ARCH}/boot/dts/kuroboxHD.dts"
-KERNEL_DEVICETREE_lsppchg = "arch/${ARCH}/boot/dts/kuroboxHG.dts"
-KERNEL_DEVICETREE_mpc8313e-rdb = "arch/${ARCH}/boot/dts/mpc8313erdb.dts"
-KERNEL_DEVICETREE_mpc8315e-rdb = "arch/${ARCH}/boot/dts/mpc8315erdb.dts"
-KERNEL_DEVICETREE_mpc8323e-rdb = "arch/${ARCH}/boot/dts/mpc832x_rdb.dts"
-KERNEL_DEVICETREE_mpc8544ds = "arch/${ARCH}/boot/dts/mpc8544ds.dts"
-KERNEL_DEVICETREE_mpc8641-hpcn = "arch/${ARCH}/boot/dts/mpc8641_hpcn.dts"
-KERNEL_DEVICETREE_p1020rdb = "arch/${ARCH}/boot/dts/p1020rdb.dts"
-KERNEL_DEVICETREE_p2020ds = "arch/${ARCH}/boot/dts/p2020ds.dts"
-KERNEL_DEVICETREE_sequoia = "arch/${ARCH}/boot/dts/sequoia.dts"
-KERNEL_DEVICETREE_tqm8540 = "arch/${ARCH}/boot/dts/tqm8540.dts"
-KERNEL_DEVICETREE_xilinx-ml507 = "arch/${ARCH}/boot/dts/virtex440-ml507.dts"
+#KERNEL_DEVICETREE_overo = "arch/${ARCH}/boot/dts/overo.dts"
 
 KERNEL_DEVICETREE_FLAGS = "-R 8 -S 0x3000"
 
@@ -227,10 +206,6 @@ do_configure_append() {
 		sed -i -e "s:-m0644:-m 0644:g" scripts/Makefile.fwinst
 	fi
 }
-
-# bitbake.conf only prepends PARALLEL make in tasks called do_compile, which isn't the case for compile_modules
-# So explicitly enable it for that in here
-EXTRA_OEMAKE = "${PARALLEL_MAKE} "
 
 do_install_append() {
 	oe_runmake headers_install INSTALL_HDR_PATH=${D}${exec_prefix}/src/linux-${KERNEL_VERSION} ARCH=$ARCH
