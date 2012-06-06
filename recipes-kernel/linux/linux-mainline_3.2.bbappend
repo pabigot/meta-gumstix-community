@@ -2,9 +2,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-mainline-3.2"
 
 COMPATIBLE_MACHINE_overo = "(overo)"
 
-PV = "3.2.18"
-# v3.2.18 tag
-SRCREV_pn-${PN} = "52c6b95f8a2edaff98b779f15b2f4d69b61b18b9"
+PV = "3.2.19"
+# v3.2.19 tag
+SRCREV_pn-${PN} = "563b3269570396946bc2b08e078c6556f9029a95"
 
 # Overwrite meta-ti parallel make options on all tasks (install fails with 
 # parallel make). So we have at least compile with standard PARALLEL_MAKE
@@ -15,7 +15,7 @@ PARALLEL_MAKE = ""
 #PARALLEL_MAKEINST = ""
 
 # We need our own increment
-MACHINE_KERNEL_PR_append = "3"
+MACHINE_KERNEL_PR_append = "4"
 
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
