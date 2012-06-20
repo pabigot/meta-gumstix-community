@@ -1,0 +1,30 @@
+From d96b03c50e5a0548b41ff6929c124085a58cccee Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 20 Jun 2012 16:48:58 +0200
+Subject: [PATCH] include/configs/omap3_overo.h: align kernel NAND partition
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ include/configs/omap3_overo.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
+index bfd4570..91bf9fd 100644
+--- a/include/configs/omap3_overo.h
++++ b/include/configs/omap3_overo.h
+@@ -184,7 +184,7 @@
+ 		"bootm ${loadaddr}\0" \
+ 	"nandboot=echo Booting from nand ...; " \
+ 		"run nandargs; " \
+-		"nand read ${loadaddr} 280000 400000; " \
++		"nand read ${loadaddr} 280000 800000; " \
+ 		"bootm ${loadaddr}\0" \
+ 
+ #define CONFIG_BOOTCOMMAND \
+-- 
+1.7.6.5
+

@@ -15,7 +15,7 @@ PARALLEL_MAKE = ""
 #PARALLEL_MAKEINST = ""
 
 # We need our own increment
-MACHINE_KERNEL_PR_append = "4"
+MACHINE_KERNEL_PR_append = "5"
 
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
@@ -28,6 +28,7 @@ SRC_URI_append_overo = "\
 	file://TWL4030/0006-Enabling-Hwmon-driver-for-twl4030-madc.patch \
 	\
 	file://board_init/0001-board-overo.c-use-sakoman-s-board-init-code.patch \
+	file://board_init/0002-board-overo.c-double-NAND-partition-for-kernel-to-8M.patch \
 	\
 	file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
 	\
