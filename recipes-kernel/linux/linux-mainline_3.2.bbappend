@@ -15,7 +15,7 @@ PARALLEL_MAKE = ""
 #PARALLEL_MAKEINST = ""
 
 # We need our own increment
-MACHINE_KERNEL_PR_append = "5"
+MACHINE_KERNEL_PR_append = "6"
 
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
