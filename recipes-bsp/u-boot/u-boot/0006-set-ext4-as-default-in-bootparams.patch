@@ -1,0 +1,30 @@
+From be7009caf382f685ab41fc18a6e4d1671f76cead Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Mon, 25 Jun 2012 11:35:26 +0200
+Subject: [PATCH 6/6] set ext4 as default in bootparams
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ include/configs/omap3_overo.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
+index bfd4570..6a1558b 100644
+--- a/include/configs/omap3_overo.h
++++ b/include/configs/omap3_overo.h
+@@ -156,7 +156,7 @@
+ 	"defaultdisplay=dvi\0" \
+ 	"mmcdev=0\0" \
+ 	"mmcroot=/dev/mmcblk0p2 rw\0" \
+-	"mmcrootfstype=ext3 rootwait\0" \
++	"mmcrootfstype=ext4 rootwait\0" \
+ 	"nandroot=ubi0:rootfs ubi.mtd=4\0" \
+ 	"nandrootfstype=ubifs\0" \
+ 	"mmcargs=setenv bootargs console=${console} " \
+-- 
+1.7.6.5
+

@@ -5,7 +5,7 @@ UBOOT_BINARY = "u-boot.img"
 UBOOT_IMAGE = "u-boot-${MACHINE}-${PV}-${PR}.img"
 UBOOT_SYMLINK = "u-boot-${MACHINE}.img"
 
-PR = "r3"
+PR = "r4"
 PV = "2011.12"
 
 COMPATIBLE_MACHINE = "overo"
@@ -17,6 +17,7 @@ SRC_URI = " \
 	file://0003-config-Always-use-GNU-ld.patch \
 	file://0004-overo-fix-crashes-for-boards-revision-1.patch \
 	file://0005-include-configs-omap3_overo.h-align-kernel-NAND-part.patch \
+	file://0006-set-ext4-as-default-in-bootparams.patch \
 "
 
 SRCREV = "137703b811502dfea364650fb3e17f20b4c21333"
