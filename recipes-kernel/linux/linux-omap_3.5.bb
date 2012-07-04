@@ -5,8 +5,8 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "(overo)"
 
-PV = "3.5-rc4"
-SRCREV_pn-${PN} = "c99573a43e3233900bf18948a45cf9411cc14932"
+PV = "3.5-rc5"
+SRCREV_pn-${PN} = "324974a124328bbbf5f6f275d9dac4e585fface0"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 MACHINE_KERNEL_PR_append = "a"
