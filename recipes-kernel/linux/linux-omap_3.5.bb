@@ -28,15 +28,3 @@ SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \
 "
 
 S = "${WORKDIR}/git"
-
-# Sadly perf is broken:
-#| util/hist.c: In function '__hists__add_entry':
-#| util/hist.c:240:27: error: invalid type argument of '->' (have 'struct hist_entry')
-#| util/hist.c:241:23: error: invalid type argument of '->' (have 'struct hist_entry')
-do_compile_perf() {
-	:
-}
-
-do_install_perf() {
-	:
-}
