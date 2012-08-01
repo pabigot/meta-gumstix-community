@@ -108,7 +108,7 @@ run_root() {
 
 	# rootfs
 	mount ${DevicePath}2 /tmp/tmp_mount$$ || exit 1
-	rm -r /tmp/tmp_mount$$/*
+	rm -rf /tmp/tmp_mount$$/*
 	cd /tmp/tmp_mount$$
 	tar xvjf $RootFsFile
 	cd ..
