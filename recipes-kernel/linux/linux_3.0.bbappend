@@ -15,7 +15,7 @@ MACHINE_KERNEL_PR_append = "3"
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
 SRC_URI_append_overo = " \
-	${OVERO_BOOT_LOGO} \
+    ${OVERO_BOOT_LOGO} \
 "
 
 S = "${WORKDIR}/git"
