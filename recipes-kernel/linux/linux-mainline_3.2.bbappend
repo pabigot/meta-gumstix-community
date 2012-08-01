@@ -20,23 +20,23 @@ MACHINE_KERNEL_PR_append = "6"
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
 SRC_URI_append_overo = "\
-	file://TWL4030/0001-rtc-twl-add-support-for-backup-battery-recharge.patch \
-	file://TWL4030/0002-soc-codecs-Enable-audio-capture-by-default-for-twl4030.patch \
-	file://TWL4030/0003-soc-codecs-twl4030-Turn-on-mic-bias-by-default.patch \
-	file://TWL4030/0004-omap-mmc-twl4030-move-clock-input-selection-prior-to-vcc-test.patch \
-	file://TWL4030/0005-Add-power-off-support-for-the-TWL4030-companion.patch \
-	file://TWL4030/0006-Enabling-Hwmon-driver-for-twl4030-madc.patch \
-	\
-	file://board_init/0001-board-overo.c-use-sakoman-s-board-init-code.patch \
-	file://board_init/0002-board-overo.c-double-NAND-partition-for-kernel-to-8M.patch \
-	\
-	file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
-	\
-	file://MMC/0001-mmc-omap-add-sdio-interrupt-support.patch \
-	\
-	file://I2C/0001-OMAP-I2C-Fix-timeout-problem-during-suspend.patch \
-	\
-	file://DSS/0001-OMAPDSS-use-sync-versions-of-pm_runtime_put.patch \
-	\
-	${OVERO_BOOT_LOGO} \
+    file://TWL4030/0001-rtc-twl-add-support-for-backup-battery-recharge.patch \
+    file://TWL4030/0002-soc-codecs-Enable-audio-capture-by-default-for-twl4030.patch \
+    file://TWL4030/0003-soc-codecs-twl4030-Turn-on-mic-bias-by-default.patch \
+    file://TWL4030/0004-omap-mmc-twl4030-move-clock-input-selection-prior-to-vcc-test.patch \
+    file://TWL4030/0005-Add-power-off-support-for-the-TWL4030-companion.patch \
+    file://TWL4030/0006-Enabling-Hwmon-driver-for-twl4030-madc.patch \
+    \
+    file://board_init/0001-board-overo.c-use-sakoman-s-board-init-code.patch \
+    file://board_init/0002-board-overo.c-double-NAND-partition-for-kernel-to-8M.patch \
+    \
+    file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
+    \
+    file://MMC/0001-mmc-omap-add-sdio-interrupt-support.patch \
+    \
+    file://I2C/0001-OMAP-I2C-Fix-timeout-problem-during-suspend.patch \
+    \
+    file://DSS/0001-OMAPDSS-use-sync-versions-of-pm_runtime_put.patch \
+    \
+    ${OVERO_BOOT_LOGO} \
 "
