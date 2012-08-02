@@ -24,6 +24,8 @@ SRC_URI += " \
     \
     file://USB/0001-Revert-Fix-OMAP-EHCI-suspend-resume-failure-i693.patch \
     \
+    file://TWL4030/0001-Add-power-off-support-for-the-TWL4030-companion.patch \
+    \
     file://defconfig \
     ${OVERO_BOOT_LOGO} \
 "
