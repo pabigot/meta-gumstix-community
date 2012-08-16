@@ -9,7 +9,7 @@ PV = "3.5"
 SRCREV_pn-${PN} = "28a33cbc24e4256c143dce96c7d93bf423229f92"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "f"
+MACHINE_KERNEL_PR_append = "g"
 
 FILESPATH =. "${FILE_DIRNAME}/linux-omap:${FILE_DIRNAME}/linux-omap/${MACHINE}:"
 
@@ -32,3 +32,5 @@ SRC_URI += " \
 "
 
 S = "${WORKDIR}/git"
+
+PARALLEL_MAKEINST = ""
