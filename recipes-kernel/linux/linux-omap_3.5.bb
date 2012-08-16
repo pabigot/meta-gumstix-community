@@ -31,7 +31,4 @@ SRC_URI += " \
     ${OVERO_BOOT_LOGO} \
 "
 
-SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \
-"
-
 S = "${WORKDIR}/git"
