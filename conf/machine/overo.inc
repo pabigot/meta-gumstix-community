@@ -38,7 +38,7 @@ MKUBIFS_ARGS = "-m 2048 -e 129024 -c 1996"
 UBINIZE_ARGS = "-m 2048 -p 128KiB -s 512"
 UBI_VOLNAME = "rootfs"
 
-MACHINE_EXTRA_RRECOMMENDS = "kernel-modules linux-firmware-sd8686 libgles-omap3"
+MACHINE_EXTRA_RRECOMMENDS = "kernel-modules linux-firmware-sd8686 libgles-omap3 udev-udisks-rules-overo"
 #task-ti-drivers
 
 MACHINE_FEATURES = "kernel26 alsa apm ext2 screen usbgadget usbhost vfat"
