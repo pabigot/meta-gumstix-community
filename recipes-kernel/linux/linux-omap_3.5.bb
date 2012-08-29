@@ -9,7 +9,7 @@ PV = "3.5"
 SRCREV_pn-${PN} = "28a33cbc24e4256c143dce96c7d93bf423229f92"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "j"
+MACHINE_KERNEL_PR_append = "k"
 
 FILESPATH =. "${FILE_DIRNAME}/linux-omap:${FILE_DIRNAME}/linux-omap/${MACHINE}:"
 
@@ -31,7 +31,7 @@ SRC_URI += " \
     \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
-    file://opp/0003-opp3xxx_data.c-Gumstix-does-not-recommend-frequencie.patch \
+    file://opp/0003-Gumstix-does-not-recommend-frequencies-800MHz-so-dis.patch \
     \
     file://defconfig \
     ${OVERO_BOOT_LOGO} \
