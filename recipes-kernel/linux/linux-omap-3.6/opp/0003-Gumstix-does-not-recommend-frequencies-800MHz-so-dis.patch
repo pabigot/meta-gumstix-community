@@ -1,0 +1,55 @@
+From 07720aa3e54f2ca9c0c5981d498fe96600b4b750 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 29 Aug 2012 15:01:14 +0200
+Subject: [PATCH] Gumstix does not recommend frequencies > 800MHz so disable
+ 1GHz
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ arch/arm/mach-omap2/board-overo.c  |    4 +---
+ arch/arm/mach-omap2/opp3xxx_data.c |    2 --
+ 2 files changed, 1 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
+index 59bfe59..81b8cf5 100644
+--- a/arch/arm/mach-omap2/board-overo.c
++++ b/arch/arm/mach-omap2/board-overo.c
+@@ -530,9 +530,8 @@ static void __init overo_opp_init(void)
+ 				__func__, mpu_dev);
+ 			return;
+ 		}
+-		/* Enable MPU 1GHz and lower opps */
++
+ 		r = opp_enable(mpu_dev, 800000000);
+-		r |= opp_enable(mpu_dev, 1000000000);
+ 
+ 		if (omap3_has_iva()) {
+ 			/* Enable IVA 800MHz and lower opps */
+@@ -544,7 +543,6 @@ static void __init overo_opp_init(void)
+ 			pr_err("%s: failed to enable higher opp %d\n",
+ 				__func__, r);
+ 			opp_disable(mpu_dev, 800000000);
+-			opp_disable(mpu_dev, 1000000000);
+ 			if (omap3_has_iva()) {
+ 				opp_disable(iva_dev, 660000000);
+ 				opp_disable(iva_dev, 800000000);
+diff --git a/arch/arm/mach-omap2/opp3xxx_data.c b/arch/arm/mach-omap2/opp3xxx_data.c
+index 7112b05..82782fc 100644
+--- a/arch/arm/mach-omap2/opp3xxx_data.c
++++ b/arch/arm/mach-omap2/opp3xxx_data.c
+@@ -138,8 +138,6 @@ static struct omap_opp_def __initdata omap36xx_opp_def_list[] = {
+ 	OPP_INITIALIZER("mpu", true,  600000000, OMAP3630_VDD_MPU_OPP100_UV),
+ 	/* MPU OPP3 - OPP-Turbo */
+ 	OPP_INITIALIZER("mpu", false, 800000000, OMAP3630_VDD_MPU_OPP120_UV),
+-	/* MPU OPP4 - OPP-SB */
+-	OPP_INITIALIZER("mpu", false, 1000000000, OMAP3630_VDD_MPU_OPP1G_UV),
+ 
+ 	/* L3 OPP1 - OPP50 */
+ 	OPP_INITIALIZER("l3_main", true, 100000000, OMAP3630_VDD_CORE_OPP50_UV),
+-- 
+1.7.6.5
+
