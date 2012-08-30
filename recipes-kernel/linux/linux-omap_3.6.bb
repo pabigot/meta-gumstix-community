@@ -7,6 +7,7 @@ COMPATIBLE_MACHINE = "(overo)"
 
 DEFAULT_PREFERENCE = "-1"
 
+# this is actually 3.6rc3+ but to keep package feeds happy we simply say 3.6
 PV = "3.6"
 SRCREV_pn-${PN} = "fea7a08acb13524b47711625eebea40a0ede69a0"
 
@@ -32,6 +33,8 @@ SRC_URI += " \
     \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
+    \
+    file://ADS7846/0001-ARM-OMAP2-ads7846-init-fix-fault-caused-by-freeing-pen-down-GPIO.patch \
     \
     file://defconfig \
     ${OVERO_BOOT_LOGO} \
