@@ -3,7 +3,7 @@ require conf/machine/include/omap3.inc
 EXTRA_IMAGEDEPENDS = "u-boot"
 PREFERRED_PROVIDER_virtual/bootloader = "u-boot"
 UBOOT_MACHINE = "omap3_overo_config"
-PREFERRED_VERSION_pn-u-boot = "2011.12"
+PREFERRED_VERSION_pn-u-boot = "2012.07"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-omap"
 
