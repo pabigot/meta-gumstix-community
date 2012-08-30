@@ -31,7 +31,6 @@ SRC_URI += " \
     \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
-    file://opp/0003-Gumstix-does-not-recommend-frequencies-800MHz-so-dis.patch \
     \
     file://defconfig \
     ${OVERO_BOOT_LOGO} \
