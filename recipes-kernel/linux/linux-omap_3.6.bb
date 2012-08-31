@@ -33,6 +33,7 @@ SRC_URI += " \
     \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
+    file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
     \
     file://ADS7846/0001-ARM-OMAP2-ads7846-init-fix-fault-caused-by-freeing-pen-down-GPIO.patch \
     \
