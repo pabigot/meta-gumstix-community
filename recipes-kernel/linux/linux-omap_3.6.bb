@@ -12,7 +12,7 @@ PV = "3.6"
 SRCREV_pn-${PN} = "fea7a08acb13524b47711625eebea40a0ede69a0"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "a"
+MACHINE_KERNEL_PR_append = "b"
 
 FILESPATH =. "${FILE_DIRNAME}/linux-omap:${FILE_DIRNAME}/linux-omap/${MACHINE}:"
 
@@ -36,6 +36,7 @@ SRC_URI += " \
     file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
     \
     file://ADS7846/0001-ARM-OMAP2-ads7846-init-fix-fault-caused-by-freeing-pen-down-GPIO.patch \
+    file://ADS7846/0002-drivers-input-touchscreen-ads7846-return-ENODEV-if-d.patch \
     \
     file://defconfig \
     ${OVERO_BOOT_LOGO} \
