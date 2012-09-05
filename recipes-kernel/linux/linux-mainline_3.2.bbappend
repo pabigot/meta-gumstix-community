@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-mainline-3.2"
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-mainline-3.2:${THISDIR}/splash:"
 
 COMPATIBLE_MACHINE_overo = "(overo)"
 

@@ -9,9 +9,6 @@ inherit kernel siteinfo
 # Enable OABI compat for people stuck with obsolete userspace
 ARM_KEEP_OABI ?= "1"
 
-# Quirk for udev greater or equal 141
-UDEV_GE_141 ?= "0"
-
 # Specify the commandline for your device
 
 # Set the verbosity of kernel messages during runtime
@@ -121,36 +118,34 @@ do_configure_prepend() {
         #
 
         # Newer versions of udev mandate that sysfs doesn't have deprecated entries
-        if [ "${UDEV_GE_141}" = "1" ] ; then
-            sed -e /CONFIG_SYSFS_DEPRECATED/d \
-                -e /CONFIG_SYSFS_DEPRECATED_V2/d \
-                -e /CONFIG_HOTPLUG/d \
-                -e /CONFIG_UEVENT_HELPER_PATH/d \
-                -e /CONFIG_UNIX/d \
-                -e /CONFIG_SYSFS/d \
-                -e /CONFIG_PROC_FS/d \
-                -e /CONFIG_TMPFS/d \
-                -e /CONFIG_INOTIFY_USER/d \
-                -e /CONFIG_SIGNALFD/d \
-                -e /CONFIG_TMPFS_POSIX_ACL/d \
-                -e /CONFIG_BLK_DEV_BSG/d \
-                -i '${S}/.config'
+        sed -e /CONFIG_SYSFS_DEPRECATED/d \
+            -e /CONFIG_SYSFS_DEPRECATED_V2/d \
+            -e /CONFIG_HOTPLUG/d \
+            -e /CONFIG_UEVENT_HELPER_PATH/d \
+            -e /CONFIG_UNIX/d \
+            -e /CONFIG_SYSFS/d \
+            -e /CONFIG_PROC_FS/d \
+            -e /CONFIG_TMPFS/d \
+            -e /CONFIG_INOTIFY_USER/d \
+            -e /CONFIG_SIGNALFD/d \
+            -e /CONFIG_TMPFS_POSIX_ACL/d \
+            -e /CONFIG_BLK_DEV_BSG/d \
+            -i '${S}/.config'
 
-            echo '# CONFIG_SYSFS_DEPRECATED is not set' >> ${S}/.config
-            echo '# CONFIG_SYSFS_DEPRECATED_V2 is not set' >> ${S}/.config
-            echo 'CONFIG_HOTPLUG=y' >> ${S}/.config
-            echo 'CONFIG_UEVENT_HELPER_PATH=""' >> ${S}/.config
-            echo 'CONFIG_UNIX=y' >> ${S}/.config
-            echo 'CONFIG_SYSFS=y' >> ${S}/.config
-            echo 'CONFIG_PROC_FS=y' >> ${S}/.config
-            echo 'CONFIG_TMPFS=y' >> ${S}/.config
-            echo 'CONFIG_INOTIFY_USER=y' >> ${S}/.config
-            echo 'CONFIG_SIGNALFD=y' >> ${S}/.config
-            echo 'CONFIG_TMPFS_POSIX_ACL=y' >> ${S}/.config
-            echo 'CONFIG_BLK_DEV_BSG=y' >> ${S}/.config
-            echo 'CONFIG_DEVTMPFS=y' >> ${S}/.config
-            echo 'CONFIG_DEVTMPFS_MOUNT=y' >> ${S}/.config
-        fi
+        echo '# CONFIG_SYSFS_DEPRECATED is not set' >> ${S}/.config
+        echo '# CONFIG_SYSFS_DEPRECATED_V2 is not set' >> ${S}/.config
+        echo 'CONFIG_HOTPLUG=y' >> ${S}/.config
+        echo 'CONFIG_UEVENT_HELPER_PATH=""' >> ${S}/.config
+        echo 'CONFIG_UNIX=y' >> ${S}/.config
+        echo 'CONFIG_SYSFS=y' >> ${S}/.config
+        echo 'CONFIG_PROC_FS=y' >> ${S}/.config
+        echo 'CONFIG_TMPFS=y' >> ${S}/.config
+        echo 'CONFIG_INOTIFY_USER=y' >> ${S}/.config
+        echo 'CONFIG_SIGNALFD=y' >> ${S}/.config
+        echo 'CONFIG_TMPFS_POSIX_ACL=y' >> ${S}/.config
+        echo 'CONFIG_BLK_DEV_BSG=y' >> ${S}/.config
+        echo 'CONFIG_DEVTMPFS=y' >> ${S}/.config
+        echo 'CONFIG_DEVTMPFS_MOUNT=y' >> ${S}/.config
 
         # Newer inits like systemd need cgroup support
         if [ "${KERNEL_ENABLE_CGROUPS}" = "1" ] ; then

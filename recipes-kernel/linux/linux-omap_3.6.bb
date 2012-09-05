@@ -1,26 +1,12 @@
 require linux.inc
-
-DESCRIPTION = "Linux kernel gumstix overo"
-KERNEL_IMAGETYPE = "uImage"
-
-COMPATIBLE_MACHINE = "(overo)"
-
-DEFAULT_PREFERENCE = "-1"
-
-# this is actually 3.6rc3+ but to keep package feeds happy we simply say 3.6
-PV = "3.6"
-SRCREV_pn-${PN} = "fea7a08acb13524b47711625eebea40a0ede69a0"
+require linux-common.inc
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "b"
+MACHINE_KERNEL_PR_append = "a"
 
-FILESPATH =. "${FILE_DIRNAME}/linux-omap:${FILE_DIRNAME}/linux-omap/${MACHINE}:"
-
-OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
+FILESPATH =. "${FILE_DIRNAME}/linux-omap-3.6:${FILE_DIRNAME}/linux-omap-3.6/${MACHINE}:"
 
 SRC_URI += " \
-    git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap.git;branch=master;protocol=git \
-    \
     file://0001-Revert-ARM-OMAP-SoC-detection-remove-unused-cpu_is-m.patch \
     \
     file://board_init/0001-board-overo.c-double-NAND-partition-for-kernel-to-8M.patch \
@@ -37,11 +23,6 @@ SRC_URI += " \
     \
     file://ADS7846/0001-ARM-OMAP2-ads7846-init-fix-fault-caused-by-freeing-pen-down-GPIO.patch \
     file://ADS7846/0002-drivers-input-touchscreen-ads7846-return-ENODEV-if-d.patch \
-    \
-    file://defconfig \
-    ${OVERO_BOOT_LOGO} \
 "
-
-S = "${WORKDIR}/git"
 
 PARALLEL_MAKEINST = ""

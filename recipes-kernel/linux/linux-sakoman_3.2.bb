@@ -1,24 +1,13 @@
 require linux.inc
+require linux-common.inc
 
-DEFAULT_PREFERENCE = "-99"
+# The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
+MACHINE_KERNEL_PR_append = "a"
 
-DESCRIPTION = "Linux kernel for OMAP processors"
-KERNEL_IMAGETYPE = "uImage"
+FILESPATH =. "${FILE_DIRNAME}/linux-sakoman:${FILE_DIRNAME}/linux-sakoman/${MACHINE}:"
 
-MACHINE_KERNEL_PR_append = "1"
-
-PARALLEL_MAKE = ""
-PARALLEL_MAKEINST = ""
-
-BOOT_SPLASH ?= "logo_linux_clut224-generic.ppm"
-
-S = "${WORKDIR}/git"
-
-SRCREV = "b2a449a98ee17df64fecf5b4770d74b04e21d2cd"
-SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git \
-	   file://defconfig \
-           file://${BOOT_SPLASH} \
-           "
+SRC_URI += " \
+"
 
 # set up how to use USB OTG
 MUSB_MODE = "host"
@@ -51,4 +40,7 @@ do_configure_prepend() {
             sed -i 's:CONFIG_USB_MUSB_HDRC_HCD=y:# CONFIG_USB_MUSB_HDRC_HCD is not set:g' ${WORKDIR}/defconfig
             sed -i 's:# CONFIG_USB_GADGET_MUSB_HDRC is not set:CONFIG_USB_GADGET_MUSB_HDRC=y:g' ${WORKDIR}/defconfig
         fi
+}
 
+PARALLEL_MAKE = ""
+PARALLEL_MAKEINST = ""
