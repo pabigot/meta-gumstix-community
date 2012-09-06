@@ -1,21 +1,14 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-mainline-3.2:${THISDIR}/splash:"
+require linux-common.inc
 
+# meta-ti does not support overo
 COMPATIBLE_MACHINE_overo = "(overo)"
-
-PV = "3.2.19"
-# v3.2.19 tag
-SRCREV_pn-${PN} = "563b3269570396946bc2b08e078c6556f9029a95"
-
-# Overwrite meta-ti parallel make options on all tasks (install fails with 
-# parallel make). So we have at least compile with standard PARALLEL_MAKE
-# options.
-EXTRA_OEMAKE = ""
-# TODO: Kernel currently only uses PARALLEL_MAKE (error occures on install)
-PARALLEL_MAKE = ""
-#PARALLEL_MAKEINST = ""
 
 # We need our own increment
 MACHINE_KERNEL_PR_append = "6"
+
+PV = "${KERNEL_PV_MAINLINE_32}"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-mainline-3.2:${THISDIR}/splash:"
 
 OVERO_BOOT_LOGO ?= "file://logo_linux_clut224.ppm"
 
@@ -40,3 +33,11 @@ SRC_URI_append_overo = "\
     \
     ${OVERO_BOOT_LOGO} \
 "
+
+# Overwrite meta-ti parallel make options on all tasks (install fails with
+# parallel make). So we have at least compile with standard PARALLEL_MAKE
+# options.
+EXTRA_OEMAKE = ""
+# TODO: Kernel currently only uses PARALLEL_MAKE (error occures on install)
+PARALLEL_MAKE = ""
+#PARALLEL_MAKEINST = ""

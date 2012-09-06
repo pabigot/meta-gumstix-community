@@ -1,6 +1,10 @@
-# central settings to ensure we have matching kernel-headers (included by overo.conf)
+# central kernel settings (included by overo.conf)
+KERNEL_GIT_URI_MAINLINE_32        = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-3.2.y;protocol=git"
+KERNEL_GIT_SRCREV_MAINLINE_32     = "563b3269570396946bc2b08e078c6556f9029a95"
+KERNEL_PV_MAINLINE_32             = "3.2.19"
+
 KERNEL_GIT_URI_SAKOMAN_32         = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git"
-KERNEL_GIT_SRCREV_SAKOMAN_32      = "b2a449a98ee17df64fecf5b4770d74b04e21d2cd"
+KERNEL_GIT_SRCREV_SAKOMAN_32      = "513770d80c0cfb26cc406c9ca3916df2e7afe46d"
 KERNEL_PV_SAKOMAN_32              = "3.2.0"
 
 KERNEL_GIT_URI_OMAP_35            = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap.git;branch=master;protocol=git"
@@ -11,8 +15,8 @@ KERNEL_GIT_URI_OMAP_36            = "git://git.kernel.org/pub/scm/linux/kernel/g
 KERNEL_GIT_SRCREV_OMAP_36         = "fea7a08acb13524b47711625eebea40a0ede69a0"
 KERNEL_PV_OMAP_36                 = "3.6.0-rc3"
 
-PREFERRED_PROVIDER_virtual/kernel = "linux-omap"
+# here our selection is made (don't forget first..)
+PREF_KERNEL_PROVIDER              = "linux-omap"
 PREF_KERNEL_GIT_URI               = "${KERNEL_GIT_URI_OMAP_35}"
 PREF_KERNEL_GIT_SRCREV            = "${KERNEL_GIT_SRCREV_OMAP_35}"
 PREF_KERNEL_PV                    = "${KERNEL_PV_OMAP_35}"
-
