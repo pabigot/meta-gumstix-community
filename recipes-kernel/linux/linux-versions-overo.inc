@@ -1,7 +1,7 @@
 # central settings to ensure we have matching kernel-headers (included by overo.conf)
-KERNEL_GIT_URI_OMAP_SAKOMAN       = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git"
-KERNEL_GIT_SRCREV_OMAP_SAKOMAN    = "b2a449a98ee17df64fecf5b4770d74b04e21d2cd"
-KERNEL_PV_OMAP_SAKOMAN            = "3.5.0"
+KERNEL_GIT_URI_SAKOMAN_32         = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git"
+KERNEL_GIT_SRCREV_SAKOMAN_32      = "b2a449a98ee17df64fecf5b4770d74b04e21d2cd"
+KERNEL_PV_SAKOMAN_32              = "3.2.0"
 
 KERNEL_GIT_URI_OMAP_35            = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap.git;branch=master;protocol=git"
 KERNEL_GIT_SRCREV_OMAP_35         = "28a33cbc24e4256c143dce96c7d93bf423229f92"
