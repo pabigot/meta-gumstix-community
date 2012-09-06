@@ -4,6 +4,8 @@ require linux-common.inc
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 MACHINE_KERNEL_PR_append = "a"
 
+PV = "${KERNEL_PV_OMAP_36}"
+
 FILESPATH =. "${FILE_DIRNAME}/linux-omap-3.6:${FILE_DIRNAME}/linux-omap-3.6/${MACHINE}:"
 
 SRC_URI += " \

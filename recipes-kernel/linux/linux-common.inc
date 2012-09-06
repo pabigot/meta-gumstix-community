@@ -2,7 +2,6 @@ DESCRIPTION = "Linux kernel for gumstix overo"
 
 COMPATIBLE_MACHINE = "(overo)"
 
-PV = "${PREF_KERNEL_PV}"
 SRCREV = "${PREF_KERNEL_GIT_SRCREV}"
 
 FILESPATH =. "${FILE_DIRNAME}/splash:"
