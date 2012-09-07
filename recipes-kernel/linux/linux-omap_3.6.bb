@@ -27,8 +27,7 @@ SRC_URI = " \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
     file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
     \
-    file://ADS7846/0001-ARM-OMAP2-ads7846-init-fix-fault-caused-by-freeing-pen-down-GPIO.patch \
-    file://ADS7846/0002-drivers-input-touchscreen-ads7846-return-ENODEV-if-d.patch \
+    file://ADS7846/0001-drivers-input-touchscreen-ads7846-return-ENODEV-if-d.patch \
 "
 
 PARALLEL_MAKEINST = ""

@@ -12,8 +12,8 @@ KERNEL_GIT_SRCREV_OMAP_35         = "28a33cbc24e4256c143dce96c7d93bf423229f92"
 KERNEL_PV_OMAP_35                 = "3.5.0"
 
 KERNEL_GIT_URI_OMAP_36            = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap.git;branch=master;protocol=git"
-KERNEL_GIT_SRCREV_OMAP_36         = "fea7a08acb13524b47711625eebea40a0ede69a0"
-KERNEL_PV_OMAP_36                 = "3.6.0-rc3"
+KERNEL_GIT_SRCREV_OMAP_36         = "c31cc1b764b6efb713601d351c1a879c042eab34"
+KERNEL_PV_OMAP_36                 = "3.6.0-rc4"
 
 # here our selection is made (don't forget first..)
 PREF_KERNEL_PROVIDER              = "linux-omap"
