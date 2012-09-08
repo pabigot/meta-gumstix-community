@@ -26,6 +26,7 @@ SRC_URI = " \
     \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
+    file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
 "
 
 PARALLEL_MAKEINST = ""
