@@ -52,7 +52,7 @@ chk_root() {
 	if [ ! $( id -u ) -eq 0 ]; then
 		# do all non root operations
 		run_user
-		# abort in case make was performed without success
+		# abort in case run_user was performed without success
 		if [ $? -ne 0 ] ; then
 			return 1
 		fi
@@ -74,7 +74,11 @@ chk_root() {
 		fi
 
 		clear
-		echo -e "All data currenly stored on $DevicePath will be overwritten!!"
+		if [ "x$1" = "x" ] ; then
+			echo "All data currenly stored on $DevicePath will be overwritten!!"
+		else
+			echo $1 | sed "s|\%DevicePath\%|$DevicePath|"
+		fi
 
 		if [ $menuitem -eq 1 ]; then
 			echo -e "\nEnter valid root password if you are sure you want to continue"
