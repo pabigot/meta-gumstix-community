@@ -4,7 +4,7 @@ require linux-common.inc
 COMPATIBLE_MACHINE = "(overo)"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "b"
+MACHINE_KERNEL_PR_append = "c"
 
 PV = "${KERNEL_PV_OMAP_36}"
 
@@ -28,6 +28,7 @@ SRC_URI = " \
     file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
     \
     file://ADS7846/0001-drivers-input-touchscreen-ads7846-return-ENODEV-if-d.patch \
+    file://ADS7846/0002-board-overo.c-debounce-ADS7846.patch \
     \
     file://smsc/0001-drivers-net-smsc911x-return-ENODEV-if-device-is-not-.patch \
 "
