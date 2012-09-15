@@ -32,6 +32,8 @@ SRC_URI = " \
     file://ADS7846/0002-board-overo.c-debounce-ADS7846.patch \
     \
     file://smsc/0001-drivers-net-smsc911x-return-ENODEV-if-device-is-not-.patch \
+    \
+    file://mmc/0001-mmc-omap-add-sdio-interrupt-support.patch \
 "
 
 PARALLEL_MAKEINST = ""
