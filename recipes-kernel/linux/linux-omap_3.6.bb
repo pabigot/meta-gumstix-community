@@ -4,7 +4,7 @@ require linux-common.inc
 COMPATIBLE_MACHINE = "(overo)"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "c"
+MACHINE_KERNEL_PR_append = "d"
 
 PV = "${KERNEL_PV_OMAP_36}"
 
@@ -21,8 +21,6 @@ SRC_URI = " \
     \
     file://TWL4030/0001-Add-power-off-support-for-the-TWL4030-companion.patch \
     \
-    file://DSS/0001-OMAPDSS-OMAPFB-fix-framebuffer-console-colors.patch \
-    \
     file://opp/0001-omap-overo-Add-opp-init.patch \
     file://opp/0002-omap3-Add-basic-support-for-720MHz-part.patch \
     file://opp/0003-board-overo.c-disable-1GHz-according-to-gumstix-reco.patch \
@@ -31,6 +29,8 @@ SRC_URI = " \
     file://ADS7846/0002-board-overo.c-debounce-ADS7846.patch \
     \
     file://smsc/0001-drivers-net-smsc911x-return-ENODEV-if-device-is-not-.patch \
+    \
+    file://dsp/0001-staging-tidspbridge-Prepare-for-irqs.h-removal.patch \
 "
 
 PARALLEL_MAKEINST = ""
