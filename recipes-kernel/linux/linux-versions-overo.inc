@@ -16,7 +16,7 @@ KERNEL_GIT_SRCREV_OMAP_36         = "c0a22032e9c8eeb6521ab4471dac1a2bb74d088e"
 KERNEL_PV_OMAP_36                 = "3.6.0-rc7"
 
 # here our selection is made (don't forget first..)
-PREF_KERNEL_PROVIDER              = "linux-omap"
+PREF_KERNEL_PROVIDER              = "linux-omap-3.5"
 PREF_KERNEL_GIT_URI               = "${KERNEL_GIT_URI_OMAP_35}"
 PREF_KERNEL_GIT_SRCREV            = "${KERNEL_GIT_SRCREV_OMAP_35}"
 PREF_KERNEL_PV                    = "${KERNEL_PV_OMAP_35}"
