@@ -17,7 +17,7 @@ SRC_URI = " \
     \
     file://board_init/0001-board-overo.c-double-NAND-partition-for-kernel-to-8M.patch \
     \
-    file://USB/0002-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
+    file://USB/0001-board-overo.c-call-usb_musb_init-with-host-mode-as-d.patch \
     \
     file://TWL4030/0001-Add-power-off-support-for-the-TWL4030-companion.patch \
     \
