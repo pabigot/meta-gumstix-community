@@ -4,8 +4,8 @@ KERNEL_GIT_SRCREV_MAINLINE_32     = "563b3269570396946bc2b08e078c6556f9029a95"
 KERNEL_PV_MAINLINE_32             = "3.2.19"
 
 KERNEL_GIT_URI_MAINLINE_36        = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-3.6.y;protocol=git"
-KERNEL_GIT_SRCREV_MAINLINE_36     = "cb4115ad44ce05fa8d2eee30857dc10d3a854507"
-KERNEL_PV_MAINLINE_36             = "3.6.2"
+KERNEL_GIT_SRCREV_MAINLINE_36     = "9f2a940965286754f3a34d5737c3097c05db8725"
+KERNEL_PV_MAINLINE_36             = "3.6.3"
 
 KERNEL_GIT_URI_SAKOMAN_32         = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git"
 KERNEL_GIT_SRCREV_SAKOMAN_32      = "513770d80c0cfb26cc406c9ca3916df2e7afe46d"
