@@ -29,6 +29,8 @@ SRC_URI = " \
     file://ADS7846/0002-board-overo.c-debounce-ADS7846.patch \
     \
     file://smsc/0001-drivers-net-smsc911x-return-ENODEV-if-device-is-not-.patch \
+    \
+    file://DSS/0001-OMAPDSS-fix-registering-the-vsync-isr-in-apply.patch \
 "
 
 PARALLEL_MAKEINST = ""
