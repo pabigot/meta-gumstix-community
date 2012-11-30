@@ -3,8 +3,7 @@ require linux-common.inc
 # meta-ti does not support overo
 COMPATIBLE_MACHINE_overo = "(overo)"
 
-# We need our own increment
-MACHINE_KERNEL_PR_append = "6"
+PRINC := "${@int(PRINC) + 1}"
 
 PV = "${KERNEL_PV_MAINLINE_32}"
 

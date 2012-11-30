@@ -3,9 +3,7 @@ require linux-common.inc
 
 COMPATIBLE_MACHINE = "(overo)"
 
-# The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-MACHINE_KERNEL_PR_append = "a"
-
+PR = "r123"
 PV = "${KERNEL_PV_OMAP_35}"
 
 FILESPATH =. "${FILE_DIRNAME}/linux-omap-3.5:${FILE_DIRNAME}/linux-omap-3.5/${MACHINE}:"
