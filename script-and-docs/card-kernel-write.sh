@@ -35,7 +35,7 @@ SelectKernel() {
 
 	# were files found?
 	if [ $iCount -eq 0 ]; then
-		echo "No kernel iamages found in ${OE_BUILD_TMPDIR}-\*"
+		echo "No kernel images found in ${OE_BUILD_TMPDIR}-\*"
 		exit 1
 	fi
 
