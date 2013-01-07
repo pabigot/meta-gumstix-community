@@ -24,6 +24,3 @@ PREF_KERNEL_PROVIDER              = "linux-omap-3.5"
 PREF_KERNEL_GIT_URI               = "${KERNEL_GIT_URI_OMAP_35}"
 PREF_KERNEL_GIT_SRCREV            = "${KERNEL_GIT_SRCREV_OMAP_35}"
 PREF_KERNEL_PV                    = "${KERNEL_PV_OMAP_35}"
-
-# uncomment the following line for dynamic linux-libc-headers
-#require recipes-kernel/linux-libc-headers/linux-libc-headers_force_dyn_ver.inc
